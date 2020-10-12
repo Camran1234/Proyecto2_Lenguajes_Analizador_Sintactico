@@ -58,14 +58,9 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     //Se comprueba si el caracter pertenece a la transicion, verdadero si si pertenece, falso si no
                     comprobacionCaracter = transiciones[indexTransiciones].ProveChar(caracter);
                     if (comprobacionCaracter == true)
-                    {
-                        
-                        
-                        
-                            //Colocamos de que el estado actual de esta gramatica es el ultimo analizado en la transicion
-                            estadoActual = transiciones[indexTransiciones].GetLastState();
-
-
+                    {                        
+                        //Colocamos de que el estado actual de esta gramatica es el ultimo analizado en la transicion                     
+                        estadoActual = transiciones[indexTransiciones].GetLastState();
                         //Si este estado no es final
                         if (this.checkIfActualStateIsFinal(estadoActual) == false)
                         {

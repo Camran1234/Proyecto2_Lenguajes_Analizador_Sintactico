@@ -15,7 +15,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         //Tambien analizaremos la posicion y poder pintar esa parte del texto en el richtTextBox del IDE
         //la variable lengthOfToken se utilizara para usar el metodo de richTextBox Select que seleccionaremos esa parte
         //luego con SelectColor cambiamos el color
-        private InfoGramatica[] gramaticas = new InfoGramatica[34];
+        private InfoGramatica[] gramaticas = new InfoGramatica[35];
         
 
         /// <summary>
@@ -58,6 +58,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             gramaticas[31] = new Sino();
             gramaticas[32] = new Sino_Si();
             gramaticas[33] = new Suma();
+            gramaticas[34] = new Variable();
         }
 
         public InfoGramatica[] GetGramaticas()

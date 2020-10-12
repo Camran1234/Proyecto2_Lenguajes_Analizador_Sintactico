@@ -54,7 +54,6 @@
     <Compile Include="Archivo\ManipuladorArchivo.cs" />
     <Compile Include="Archivo\ManipuladorProyecto.cs" />
     <Compile Include="Archivo\ManipuladorTreeView.cs" />
-    <Compile Include="Archivo\PanelesAuxiliares.cs" />
     <Compile Include="Gramaticas\And.cs" />
     <Compile Include="Gramaticas\Boolean_.cs" />
     <Compile Include="Gramaticas\Cadena.cs" />
@@ -89,6 +88,7 @@
     <Compile Include="Gramaticas\Sino.cs" />
     <Compile Include="Gramaticas\Sino_Si.cs" />
     <Compile Include="Gramaticas\Suma.cs" />
+    <Compile Include="Gramaticas\Variable.cs" />
     <Compile Include="Informacion_Gramaticas\InfoGramatica.cs" />
     <Compile Include="Informacion_Gramaticas\State.cs" />
     <Compile Include="Informacion_Gramaticas\Transicion.cs" />

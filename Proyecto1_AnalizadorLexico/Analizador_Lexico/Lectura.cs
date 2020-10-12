@@ -12,6 +12,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
     class Lectura
     {
         private List<Error> errores = new List<Error>();
+        private List<String> tokens = new List<String>();
+        private Boolean permisoParaAgregarTokens = true;
         private string cadena = "";
         private Lenguaje lenguaje = new Lenguaje();
         private int index = -1;
@@ -54,10 +56,41 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             return erroresMensaje;
         }
 
+        /// <summary>
+        /// Devuelve la cantidad de errores encontrados
+        /// </summary>
+        /// <returns></returns>
         public int GetNoMistakes()
         {
             return errores.Count;
         }
+
+        /// <summary>
+        /// Obtiene el nombre de los tokens encontrados en el codigo
+        /// </summary>
+        /// <returns></returns>
+        public string GetTokensAsString()
+        {
+            string tokensMensaje = "";
+            String tokenAux;
+            for (int indexTokens = 0; indexTokens < tokens.Count; indexTokens++)
+            {
+                tokenAux = tokens.ToArray()[indexTokens].ToString();
+                tokensMensaje += tokenAux + "\n";
+            }
+            return tokensMensaje;
+        }
+
+        /// <summary>
+        /// Devuelve la cantidad de tokens encontrados
+        /// </summary>
+        /// <returns></returns>
+        public int GetNoTokens()
+        {
+            return tokens.Count;
+        }
+
+
 
         public void Leer(char caracter, int indexActual)
         {
@@ -113,8 +146,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 
                     //Pintamos el texto                    
                     pintador.pintarTexto(gramatica[indexGramatica].GetName(), cadena, index);
-                        permisoParaPintar = false;
-                    
+                    permisoParaPintar = false;
                 }
                 else if (resultado == 2)
                 {
@@ -168,6 +200,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                                 permisoParaPintar = false;
                             }
                             finalStateReached=true;
+                            //Agregamos el nuevo token a nuestra lista, y no agregaremos otro hasta que reinicie el automata
+                            tokens.Add(gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores])].GetName());
                         }
                         else //Al no ser estado final pintaremos la cadena que es por el color negro y marcaremos como error
                         {
@@ -181,7 +215,6 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         }
                         //Al eliminar el ultimo automata que estabamos revisando entonces reiniciara todos, y volvera a analizar todos los automatas
                         //en el siguiente caracter enviado
-
                         if (posicionesAutomatasParaAvanzar.Count == posicionAutomatasErroneos.Count)
                         {
 
@@ -208,9 +241,6 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                             finalStateReached = true;
                         }
                     }
-
-                    
-
                     //Eliminamos el automata que se estaba analizando
                     gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores])].resetState();
                     posicionesAutomatasParaAvanzar.Remove(Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores]));

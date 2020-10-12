@@ -65,8 +65,10 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
                     }else if (caracter >= 65 && caracter <= 90)
                     {
                         return true;
+                    }else if (caracter>= 48 && caracter <= 57)
+                    {
+                        return true;
                     }
-                    
                 }
                 else
                 {
