@@ -50,6 +50,7 @@
     <Compile Include="Analizador_Lexico\Gramatica.cs" />
     <Compile Include="Analizador_Lexico\Lectura.cs" />
     <Compile Include="Analizador_Lexico\PintarElemento.cs" />
+    <Compile Include="Analizador_Sintactico\Automata_Pila.cs" />
     <Compile Include="Archivo\Error.cs" />
     <Compile Include="Archivo\ManipuladorArchivo.cs" />
     <Compile Include="Archivo\ManipuladorProyecto.cs" />
