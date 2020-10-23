@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analizador_Lexico\Analizador_Lexico.cs" />
     <Compile Include="Analizador_Lexico\Lenguaje.cs" />
     <Compile Include="Analizador_Lexico\Gramatica.cs" />
     <Compile Include="Analizador_Lexico\Lectura.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Archivo\ManipuladorArchivo.cs" />
     <Compile Include="Archivo\ManipuladorProyecto.cs" />
     <Compile Include="Archivo\ManipuladorTreeView.cs" />
+    <Compile Include="Archivo\Token.cs" />
     <Compile Include="Gramaticas\And.cs" />
     <Compile Include="Gramaticas\Boolean_.cs" />
     <Compile Include="Gramaticas\Cadena.cs" />

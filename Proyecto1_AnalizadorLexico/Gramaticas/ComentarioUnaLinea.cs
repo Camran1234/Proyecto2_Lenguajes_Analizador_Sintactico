@@ -17,17 +17,17 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
 
         public override void MakeStatesAndTransition()
         {
-            this.nombresEstados = new State[3];
+            this.nombresEstados = new State[4];
             nombresEstados[0] = new State("S0", false);
             nombresEstados[1] = new State("S1", false);
-            nombresEstados[2] = new State("S2", true);
+            nombresEstados[2] = new State("S2", false);
+            nombresEstados[3] = new State("S3", true);
 
-            this.transiciones = new Transicion[5];
+            this.transiciones = new Transicion[4];
             transiciones[0] = new Transicion('/', "S0", "S1");
             transiciones[1] = new Transicion('/', "S1", "S2");
-            transiciones[2] = new Transicion('#', "S2", "S2");
-            transiciones[3] = new Transicion('$', "S2", "S2");
-            transiciones[4] = new Transicion(' ', "S2", "S2");
+            transiciones[2] = new Transicion('$', "S2", "S2");
+            transiciones[3] = new Transicion('\n', "S2", "S3");
         }
     }
 }

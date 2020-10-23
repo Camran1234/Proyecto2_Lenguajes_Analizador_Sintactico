@@ -33,13 +33,13 @@ namespace Proyecto1_AnalizadorLexico
             {
                 richTextBoxCuadroError.ResetText();
                 richTextBoxTokens.ResetText();
+                richTextBoxCuadroCompilacion.AppendText(" ");
                 lectura = new Lectura(this.richTextBoxCuadroCompilacion);
                 string texto = richTextBoxCuadroCompilacion.Text;
                 //Leemos caracter por caracter y lo mandamos a nuestro objeto Lectura para que lo lea y establezca
                 //token, pinte caracteres, detectar errores entre otras medidas
                 for(int i=0; i < texto.Length; i++)
                 {
-                    
                     lectura.Leer(texto[i],i);
                 }
                 //Lanzamos el mensaje de error

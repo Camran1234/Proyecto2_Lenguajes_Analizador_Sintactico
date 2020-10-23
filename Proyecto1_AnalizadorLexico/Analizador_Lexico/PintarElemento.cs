@@ -53,6 +53,9 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         sizeToken = 1;
                         color = Color.Pink;
                         break;
+                    case "?Error":
+                        color = Color.LightGray;
+                        break;
                     default:
                         if (token.Equals("Si") || token.Equals("Sino") || token.Equals("Sino_Si") || token.Equals("Mientras") || token.Equals("Hacer")
                              || token.Equals("Desde") || token.Equals("Hasta") || token.Equals("Incremento") || token.Equals("Variable"))

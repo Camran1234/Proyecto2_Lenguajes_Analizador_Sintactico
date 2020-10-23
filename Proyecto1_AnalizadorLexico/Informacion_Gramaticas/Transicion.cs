@@ -56,19 +56,10 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
         /// <returns></returns>
         public bool ProveChar(char caracter)
         {
-            //Si hay minusculas o mayusculas o espacios libres o saltos de linea analizara esto
-                if(caracterApuntador=='$' || caracterApuntador == '#' )
+                if(caracterApuntador=='$')
                 {
-                    if (caracter >= 97 && caracter <= 122)
-                    {
-                        return true;
-                    }else if (caracter >= 65 && caracter <= 90)
-                    {
-                        return true;
-                    }else if (caracter>= 48 && caracter <= 57)
-                    {
-                        return true;
-                    }
+                //Aceptamos cualquier valor
+                    return true;
                 }
                 else
                 {

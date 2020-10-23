@@ -13,7 +13,6 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
     {
         private List<Error> errores = new List<Error>();
         private List<String> tokens = new List<String>();
-        private Boolean permisoParaAgregarTokens = true;
         private string cadena = "";
         private Lenguaje lenguaje = new Lenguaje();
         private int index = -1;
@@ -146,6 +145,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 
                     //Pintamos el texto                    
                     pintador.pintarTexto(gramatica[indexGramatica].GetName(), cadena, index);
+                    Console.WriteLine(gramatica[indexGramatica].GetName());
                     permisoParaPintar = false;
                 }
                 else if (resultado == 2)
@@ -178,6 +178,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                 
             }
 
+            
             //Para determinar como pintaremos los errores
             if (posicionAutomatasErroneos.Count > 0)
             {
@@ -192,7 +193,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         //Corroboramos si el estado era final o no, es decir si queda como error o lo omitimos
                         //Indica que si era estado final y lo pintaremos como corresponde
                         
-                        if (gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores])].checkIfActualStateIsFinal(lastStateGramatics))
+                        if (gramatica[Convert.ToInt32(posicionAutomatasErroneos.ToArray()[indexErrores])].checkIfActualStateIsFinal(lastStateGramatics)
+                            && posicionesAutomatasParaAvanzar.Count==1)
                         {
                             if(permisoParaPintar == true)
                             {
@@ -205,13 +207,11 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         }
                         else //Al no ser estado final pintaremos la cadena que es por el color negro y marcaremos como error
                         {
-
                             if(permisoParaPintar == true)
                             {
                                 pintador.pintarTexto(cadena, cadena, index);
                                 permisoParaPintar = false;
                             }
-                            
                         }
                         //Al eliminar el ultimo automata que estabamos revisando entonces reiniciara todos, y volvera a analizar todos los automatas
                         //en el siguiente caracter enviado
