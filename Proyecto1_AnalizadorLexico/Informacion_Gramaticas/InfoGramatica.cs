@@ -51,6 +51,11 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
             {
                 if (transiciones[actualTransition].ProveChar(caracter))
                 {
+                    if (transiciones[actualTransition].IfHaveNextCharacter())
+                    {
+                        this.MoveOfTransition();
+                    }
+
                     if(actualTransition == transiciones.Length - 1)
                     {
                         //Llego al estado inicial
@@ -66,8 +71,11 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
                 }
                 else
                 {
-                    //Al no haber un error reiniciamos
-                    this.ResetTransition();
+                    if (transiciones[actualTransition].IfHaveNextCharacter())
+                    {
+                        //Al indicar que tiene un posible siguiente caracter indicaremos de que sigue en el ciclo
+                        return 2;
+                    }
                     if (actualTransition == 0)
                     {
                         //Error de que ni entro al automata
@@ -76,16 +84,17 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
                     else
                     {
                         //Error de que andaba en el automata pero fue un error lexico
+                        this.ResetTransition();
                         return 0;
                     }
-                    
+                    //Al no haber un error reiniciamos
                 }
             }
             catch(Exception ex)
             {
                 //Por si exisitian errores
                 ResetTransition();
-                return 3;
+                return 0;
             }
         }
         private void MoveOfTransition()

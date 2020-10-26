@@ -33,8 +33,19 @@ namespace Proyecto1_AnalizadorLexico
             {
                 richTextBoxCuadroError.ResetText();
                 richTextBoxTokens.ResetText();
-                richTextBoxCuadroCompilacion.AppendText(" ");
-                lectura = new Lectura(this.richTextBoxCuadroCompilacion);
+                AnalizadorLexico analizador = new AnalizadorLexico(richTextBoxCuadroCompilacion);
+                Int64 size = richTextBoxCuadroCompilacion.Text.Length;
+                for (int indexCuadro=0; indexCuadro < size; indexCuadro++)
+                {
+                    analizador.AnalizarLexema(richTextBoxCuadroCompilacion.Text[indexCuadro],indexCuadro);
+                    if(indexCuadro == size -1)
+                    {
+                        analizador.AnalizarLexema(' ', indexCuadro);
+                    }
+                }
+                analizador.AddTokens(this.richTextBoxTokens);
+                analizador.AddMistakesTokens(this.richTextBoxCuadroError, this.richTextBoxCuadroCompilacion);
+                /*lectura = new Lectura(this.richTextBoxCuadroCompilacion);
                 string texto = richTextBoxCuadroCompilacion.Text;
                 //Leemos caracter por caracter y lo mandamos a nuestro objeto Lectura para que lo lea y establezca
                 //token, pinte caracteres, detectar errores entre otras medidas
@@ -45,7 +56,7 @@ namespace Proyecto1_AnalizadorLexico
                 //Lanzamos el mensaje de error
                 this.throwErrorMessageFromLexicAnalyzer(lectura);
                 //Lanzamos los tokens encontrados
-                this.ThrowTokensFromLexicAnalyzer(lectura);
+                this.ThrowTokensFromLexicAnalyzer(lectura);*/
             }catch (Exception es)
             {
                 MessageBox.Show("Error: " + es.StackTrace + "\n Otro error: "+es.Message) ;

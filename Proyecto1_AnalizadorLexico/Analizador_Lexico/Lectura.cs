@@ -14,7 +14,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         private List<Error> errores = new List<Error>();
         private List<String> tokens = new List<String>();
         private string cadena = "";
-        private Lenguaje lenguaje = new Lenguaje();
+        private Lenguaje lenguaje = new Lenguaje(new RichTextBox());
         private int index = -1;
         //indexGramaticaAnalizada nos indica la posicion de la gramatica para indicar el nombre del token
         private Gramatica[] gramatica;

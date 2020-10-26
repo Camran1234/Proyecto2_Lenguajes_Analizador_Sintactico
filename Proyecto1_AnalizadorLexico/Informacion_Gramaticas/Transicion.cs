@@ -12,15 +12,33 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
     /// </summary>
     class Transicion
     {
-        char caracterApuntador=' ';
-        string nombreEstadoInicial="";
-        string nombreEstadoFinal="";
+        char caracterApuntador = ' ';
+        char nextPosibleCharacter = ' ' ;
+        string nombreEstadoInicial = "";
+        string nombreEstadoFinal = "";
 
-        public Transicion(char caracter,string EstadoInicial,string EstadoFinal)
+        public Transicion(char caracter, string EstadoInicial, string EstadoFinal)
         {
             this.caracterApuntador = caracter;
             nombreEstadoFinal = EstadoFinal;
             nombreEstadoInicial = EstadoInicial;
+        }
+
+        public void AssignNextCharacterToNotIgnore(char newChar)
+        {
+            nextPosibleCharacter = newChar;
+        }
+
+        public bool IfHaveNextCharacter()
+        {
+            if(nextPosibleCharacter != ' ')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public string GetStartState()
@@ -56,19 +74,24 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
         /// <returns></returns>
         public bool ProveChar(char caracter)
         {
-                if(caracterApuntador=='$')
+            //Si el caracter enviado es el mismo con el que apunta al siguiente caracter
+            if (this.caracterApuntador == caracter)
+            {
+                return true;
+            }
+            else if (caracterApuntador == '$')
+            {
+                if (caracter == this.nextPosibleCharacter)
                 {
-                //Aceptamos cualquier valor
                     return true;
                 }
                 else
                 {
-                //Si el caracter enviado es el mismo con el que apunta al siguiente caracter
-                    if (this.caracterApuntador == caracter)
-                    {
-                        return true;
-                    }
+                    //Aceptamos cualquier valor
+                    //Para aceptar ciclos
+                    return false;
                 }
+            }
             return false;
         }
 

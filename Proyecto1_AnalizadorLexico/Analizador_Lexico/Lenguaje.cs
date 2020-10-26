@@ -25,9 +25,13 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         private int resultado;
         private PintarElemento pintador;
         private Boolean permisoAgregarCaracter = true;
+        private bool solucionEncontrada;
         private List<Token> tokens = new List<Token>();
         private string lexema = "";
         private List<Error> tokenErroneos = new List<Error>();
+        private bool tokenVuelta;
+        private bool tokenAddedWhileModusOperandum = false;
+
         /// <summary>
         /// Establece un automata donde contenedremos todas las gramaticas clases que se establecieron
         /// </summary>
@@ -73,68 +77,121 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         }
 
         public Boolean ContainChar(char caracter, int index)
-        {
+        {//Al entrar el método tiene permiso para agregar el caracter una vez por lo menos
             permisoAgregarCaracter = true;
+            solucionEncontrada = false;
+
             if (this.automatasParaAvanzar.Count == 0)
             {
-                for(int indexGramatica = 0; indexGramatica < this.gramaticas.Length; indexGramatica++)
+                if (caracter != ' ' && caracter != '\n')
                 {
-                    resultado = gramaticas[indexGramatica].ProveTransition(caracter);
-                    this.Posibilities(caracter, indexGramatica, index);
+                    for (int indexGramatica = 0; indexGramatica < this.gramaticas.Length; indexGramatica++)
+                    {
+                        resultado = gramaticas[indexGramatica].ProveTransition(caracter);
+                        if (resultado != 3)
+                        {
+                            solucionEncontrada = true;
+                            //Algun metodo que indique que no se entro a ninguno
+                            //Retornaremos true y agregaremos un token 
+                        }
+                        //El modus Operandum nos indica si es la primera vez que se analizan todos los estados o no
+                        this.Posibilities(caracter, indexGramatica, index, false);
+                    }
+                }
+                else
+                {
+                    return true;
                 }
             } else           
             {
+                tryAgain2:
                 for (int indexGramatica = 0; indexGramatica < this.automatasParaAvanzar.Count; indexGramatica++)
                 {
                     resultado = gramaticas[(int) automatasParaAvanzar[indexGramatica]].ProveTransition(caracter);
-                    this.Posibilities(caracter, indexGramatica, index);
+                    if (resultado != 3 )
+                    {
+                        solucionEncontrada = true;
+                        //Algun metodo que indique que no se entro a ninguno
+                        //Retornaremos true y agregaremos un token 
+                    }
+                    this.Posibilities(caracter, (int)automatasParaAvanzar[indexGramatica], index, true);
+                    if (resultado == 0 && automatasParaAvanzar.Count > 0 && indexGramatica<automatasParaAvanzar.Count)
+                    {
+                        goto tryAgain2;
+                    }
+                }
+                if (automatasParaAvanzar.Count == 0)
+                {
+                    lexema = "";
+                    tokenAddedWhileModusOperandum = false;
+                    return true;
                 }
             }
             
-            //Si ya solo queda un estado por analizar
-            if (this.automatasParaAvanzar.Count == 1)
+            ////Si ya solo queda un estado por analizar
+            //if (this.automatasFinales.Count == 1)
+            //{
+            //    //Agregamos el token y pintamos el elemento
+            //    tokens.Add(new Token(gramaticas[automatasParaAvanzar[0]].GetName(),lexema));
+            //    pintador.pintarTexto(gramaticas[automatasParaAvanzar[0]].GetName(),lexema,index);
+            //    lexema = "";
+            //    automatasFinales.Clear();
+            //    automatasParaAvanzar.Clear();
+            //}
+            
+            if (solucionEncontrada == false)
             {
-                //Agregamos el token y pintamos el elemento
-                tokens.Add(new Token(gramaticas[automatasParaAvanzar[0]].GetName(),lexema));
-                pintador.pintarTexto(gramaticas[automatasParaAvanzar[0]].GetName(),lexema,index);
-                automatasFinales.Clear();
-                automatasParaAvanzar.Clear();
-            }
-            else
-            {
-                automatasFinales.Clear();
+                //Agregamos el token desconocido
+                if(caracter !=' ' && caracter != '\n')
+                {
+                    this.tokens.Add(new Token("?Error", lexema));
+                    lexema = "";
+                    return true;
+                }
             }
             return false;
         }
-
-        private void Posibilities(char caracter, int indexGramatica, int index)
+        private void Posibilities(char caracter, int indexGramatica, int index, bool modusOperandum)
         {
             switch (resultado)
             {
                 case 0:
-                    if (automatasParaAvanzar.Count == 1)
+                    //Marcar como error completo
+                    if(automatasParaAvanzar.Count == 1 && !tokenAddedWhileModusOperandum)
                     {
-                        //Marcar como error completo
-                        this.tokenErroneos.Add(new Error(lexema, gramaticas[indexGramatica].GetName(),index));
+                        this.tokenErroneos.Add(new Error(lexema, gramaticas[indexGramatica].GetName(), index));
                         pintador.pintarTexto("?Error", lexema, index);
                         lexema = "";
                     }
                     automatasParaAvanzar.Remove(indexGramatica);
                     break;
-                case 1:
-                    if (automatasFinales.Contains(indexGramatica) == false)
-                    {
-                        automatasFinales.Add(indexGramatica);
-                    }
-                    if (automatasParaAvanzar.Contains(indexGramatica) == false)
-                    {
-                        automatasParaAvanzar.Add(indexGramatica);
-                    }
+                case 1://Agregamos automatas en estados finales y en quienes entraron (por si no existian)
+                    //Para agregar el caracter una sola vez
                     if (permisoAgregarCaracter == true)
                     {
                         lexema += caracter;
                         permisoAgregarCaracter = false;
                     }
+                    if (tokenVuelta)
+                    {
+                        tokens.RemoveAt(tokens.Count - 1);
+                        tokenVuelta = true ;
+                    }
+                    if (modusOperandum && tokenAddedWhileModusOperandum)
+                    {
+                        tokens.RemoveAt(tokens.Count - 1);
+                    }else if(modusOperandum == false && !tokenAddedWhileModusOperandum)
+                    {
+                        tokenAddedWhileModusOperandum = true;
+                    }else if( modusOperandum && !tokenAddedWhileModusOperandum)
+                    {
+                        tokenAddedWhileModusOperandum = true;
+                    }
+                    //Agregar lo de quitar el token del anterior caso es decir remover en caso de que huebieran varios
+                    //Agregamos el token y pintamos el elemento
+                    tokens.Add(new Token(gramaticas[indexGramatica].GetName(), lexema));
+                    pintador.pintarTexto(gramaticas[indexGramatica].GetName(), lexema, index);
+                    automatasParaAvanzar.Remove(indexGramatica);
                     break;
                 case 2:
                     //Por si no contiene el automata
@@ -154,5 +211,57 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         {
             return this.gramaticas;
         }
+
+        /// <summary>
+        /// Obtiene todos los errores encontrados
+        /// </summary>
+        /// <returns></returns>
+        public string GetErroresAsString(RichTextBox richTextBox)
+        {
+            string erroresMensaje = "";
+            Error error;
+            for (int indexErrores = 0; indexErrores < tokenErroneos.Count; indexErrores++)
+            {
+                tokenErroneos.ToArray()[indexErrores].ChangeIndexToLine(richTextBox);
+                error = tokenErroneos.ToArray()[indexErrores];
+                erroresMensaje += error.Message();
+            }
+            return erroresMensaje;
+        }
+
+        /// <summary>
+        /// Devuelve la cantidad de errores encontrados
+        /// </summary>
+        /// <returns></returns>
+        public int GetNoMistakes()
+        {
+            return tokenErroneos.Count;
+        }
+
+        /// <summary>
+        /// Obtiene el nombre de los tokens encontrados en el codigo
+        /// </summary>
+        /// <returns></returns>
+        public string GetTokensAsString()
+        {
+            string tokensMensaje = "";
+            String tokenAux;
+            for (int indexTokens = 0; indexTokens < tokens.Count; indexTokens++)
+            {
+                tokenAux = tokens[indexTokens].Message();
+                tokensMensaje += tokenAux + "\n";
+            }
+            return tokensMensaje;
+        }
+
+        /// <summary>
+        /// Devuelve la cantidad de tokens encontrados
+        /// </summary>
+        /// <returns></returns>
+        public int GetNoTokens()
+        {
+            return tokens.Count;
+        }
+
     }
 }

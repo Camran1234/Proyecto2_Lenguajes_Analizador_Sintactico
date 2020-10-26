@@ -28,6 +28,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
             transiciones[0] = new Transicion('/', "S0", "S1");
             transiciones[1] = new Transicion('*', "S1", "S2");
             transiciones[2] = new Transicion('$', "S2", "S3");
+            transiciones[2].AssignNextCharacterToNotIgnore('*');
             transiciones[3] = new Transicion('*', "S2", "S3");
             transiciones[4] = new Transicion('/', "S3", "S4");
         }
