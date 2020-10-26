@@ -14,6 +14,7 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
     {
         char caracterApuntador = ' ';
         char nextPosibleCharacter = ' ' ;
+        private bool assignedPosibleCharacter= false;
         string nombreEstadoInicial = "";
         string nombreEstadoFinal = "";
 
@@ -27,11 +28,12 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
         public void AssignNextCharacterToNotIgnore(char newChar)
         {
             nextPosibleCharacter = newChar;
+            assignedPosibleCharacter = true;
         }
 
         public bool IfHaveNextCharacter()
         {
-            if(nextPosibleCharacter != ' ')
+            if(assignedPosibleCharacter)
             {
                 return true;
             }

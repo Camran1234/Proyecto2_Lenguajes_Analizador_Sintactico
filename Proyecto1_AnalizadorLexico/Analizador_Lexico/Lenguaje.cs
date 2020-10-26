@@ -97,6 +97,10 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                         //El modus Operandum nos indica si es la primera vez que se analizan todos los estados o no
                         this.Posibilities(caracter, indexGramatica, index, false);
                     }
+                    if(automatasParaAvanzar.Count == 0)
+                    {
+                        lexema = "";
+                    }
                 }
                 else
                 {
@@ -144,7 +148,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                 //Agregamos el token desconocido
                 if(caracter !=' ' && caracter != '\n')
                 {
-                    this.tokens.Add(new Token("?Error", lexema));
+                    this.tokens.Add(new Token("?Error", Convert.ToString(caracter)));
                     lexema = "";
                     return true;
                 }
