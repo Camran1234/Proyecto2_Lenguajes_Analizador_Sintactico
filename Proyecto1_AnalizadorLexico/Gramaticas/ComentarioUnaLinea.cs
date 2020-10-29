@@ -17,11 +17,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
 
         public override void MakeStatesAndTransition()
         {
-            this.nombresEstados = new State[4];
-            nombresEstados[0] = new State("S0", false);
-            nombresEstados[1] = new State("S1", false);
-            nombresEstados[2] = new State("S2", false);
-            nombresEstados[3] = new State("S3", true);
+           
 
             this.transiciones = new Transicion[4];
             transiciones[0] = new Transicion('/', "S0", "S1");

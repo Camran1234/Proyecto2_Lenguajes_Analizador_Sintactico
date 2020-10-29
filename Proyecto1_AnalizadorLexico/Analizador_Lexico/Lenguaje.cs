@@ -19,9 +19,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         //Tambien analizaremos la posicion y poder pintar esa parte del texto en el richtTextBox del IDE
         //la variable lengthOfToken se utilizara para usar el metodo de richTextBox Select que seleccionaremos esa parte
         //luego con SelectColor cambiamos el color
-        private InfoGramatica[] gramaticas = new InfoGramatica[35];
+        private InfoGramatica[] gramaticas = new InfoGramatica[42];
         private List<int> automatasParaAvanzar = new List<int>();
-        private List<int> automatasFinales = new List<int>();
         private int resultado;
         private PintarElemento pintador;
         private Boolean permisoAgregarCaracter = true;
@@ -74,6 +73,13 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             gramaticas[32] = new Sino_Si();
             gramaticas[33] = new Suma();
             gramaticas[34] = new Variable();
+            gramaticas[35] = new _String();
+            gramaticas[36] = new _Char();
+            gramaticas[37] = new True();
+            gramaticas[38] = new False();
+            gramaticas[39] = new LlaveAbierta();
+            gramaticas[40] = new LlaveCerrar();
+            gramaticas[41] = new Coma();
         }
 
         public Boolean ContainChar(char caracter, int index)
@@ -249,7 +255,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         public string GetTokensAsString()
         {
             string tokensMensaje = "";
-            String tokenAux;
+            string tokenAux;
             for (int indexTokens = 0; indexTokens < tokens.Count; indexTokens++)
             {
                 tokenAux = tokens[indexTokens].Message();
@@ -264,8 +270,87 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         /// <returns></returns>
         public int GetNoTokens()
         {
+            this.ConvertNewTokens();
             return tokens.Count;
         }
 
+        /// <summary>
+        /// Convierte los tokens amparados en palabra, entero o decimal
+        /// </summary>
+        private void ConvertNewTokens()
+        {
+            string tokenName = "";
+            string tokenActualName = "";
+            int opcion =0;
+            List<Token> tokenAuxiliar = new List<Token>();
+            for(int indexTokens=0; indexTokens<tokens.Count; indexTokens++)
+            {
+                etiqueta:
+                tokenActualName = tokens[indexTokens].ReturnTokenName();
+                if (tokenActualName.Equals("?Error"))
+                {
+                    tokenName += tokens[indexTokens].ReturnLexema();
+                }
+                else
+                {
+                    if (tokenName.Equals(""))
+                    {
+                        tokenAuxiliar.Add(tokens[indexTokens]);
+                    }
+                    else
+                    {
+                        opcion = this.CheckType(tokenName);
+                        switch (opcion)
+                        {
+                            //Decimal
+                            case 1:
+                                tokenAuxiliar.Add(new Token("numeroDecimal",tokenName));
+                                break;
+                                //Entero
+                            case 2:
+                                tokenAuxiliar.Add(new Token("numeroEntero", tokenName));
+                                break;
+                                //Palabra
+                            case 3:
+                                tokenAuxiliar.Add(new Token("Palabra", tokenName));
+                                break;
+                        }
+                        //Reiniciamos
+                        tokenName = "";
+                        goto etiqueta;
+                    }
+                }
+                tokenActualName = "";
+            }
+            tokens = tokenAuxiliar;
+        }
+
+        /// <summary>
+        /// Retorna 1 si es un decimal
+        /// Retorna 2 si es una entero
+        /// Retorna 3 si es una palabra
+        /// </summary>
+        /// <param name="expresion"></param>
+        /// <returns></returns>
+        private int CheckType(string expresion)
+        {
+
+            try
+            {
+                if (expresion.Contains("."))
+                {
+                    float.Parse(expresion);
+                    return 1;
+                }
+                else
+                {
+                    int.Parse(expresion);
+                    return 2;
+                }
+            } catch (Exception e)
+            {
+                return 3;
+            }
+        }
     }
 }

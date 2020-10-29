@@ -17,7 +17,6 @@ namespace Proyecto1_AnalizadorLexico
 {
     public partial class FormEntorno : Form
     {
-        private Lectura lectura;
         private string pathProyecto="";
         public FormEntorno()
         {
@@ -43,8 +42,8 @@ namespace Proyecto1_AnalizadorLexico
                         analizador.AnalizarLexema(' ', indexCuadro);
                     }
                 }
-                analizador.AddTokens(this.richTextBoxTokens);
                 analizador.AddMistakesTokens(this.richTextBoxCuadroError, this.richTextBoxCuadroCompilacion);
+                analizador.AddTokens(this.richTextBoxTokens);
                 /*lectura = new Lectura(this.richTextBoxCuadroCompilacion);
                 string texto = richTextBoxCuadroCompilacion.Text;
                 //Leemos caracter por caracter y lo mandamos a nuestro objeto Lectura para que lo lea y establezca
@@ -63,25 +62,7 @@ namespace Proyecto1_AnalizadorLexico
             }
         }
 
-        /// <summary>
-        /// Lanza los errores encontrados en el programa
-        /// </summary>
-        /// <param name="erroresLectura"></param>
-        private void throwErrorMessageFromLexicAnalyzer(Lectura erroresLectura)
-        {
-            string errorFraseInicial = "Errores: (" + erroresLectura.GetNoMistakes() + ") \n";
-            //Anexamos la cantidad de errores encontrados
-            richTextBoxCuadroError.AppendText(errorFraseInicial);
-            //Colocamos los errores y sus respectivas posiciones
-            richTextBoxCuadroError.AppendText(erroresLectura.GetErroresAsString());
-        }
-
-        private void ThrowTokensFromLexicAnalyzer(Lectura tokensLectura)
-        {
-            string tokens = "Tokens: (" + tokensLectura.GetNoTokens() + ") \n";
-            richTextBoxTokens.AppendText(tokens);
-            richTextBoxTokens.AppendText(tokensLectura.GetTokensAsString());
-        }
+  
 
         private void richTextBoxCuadro_TextChanged(object sender, EventArgs e)
         {

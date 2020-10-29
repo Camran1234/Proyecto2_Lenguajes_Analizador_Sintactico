@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Gramaticas
 {
-    class ParentesisAbrir : InfoGramatica
+    class Coma: InfoGramatica
     {
-        public ParentesisAbrir()
+        public Coma()
         {
-            this.nombre = "ParentesisAbrir";
+            this.nombre = "Coma";
             this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
+
             this.transiciones = new Transicion[1];
-            transiciones[0] = new Transicion('(', "S0", "S1");
+            transiciones[0] = new Transicion(',', "S0", "S1");
+
         }
     }
 }

@@ -26,5 +26,15 @@ namespace Proyecto1_AnalizadorLexico.Archivo
             return ("Token: " + token + " Lexema: " + lexema);
         }
 
+        public string ReturnTokenName()
+        {
+            return token;
+        }
+
+        public string ReturnLexema()
+        {
+            return lexema;
+        }
+
     }
 }

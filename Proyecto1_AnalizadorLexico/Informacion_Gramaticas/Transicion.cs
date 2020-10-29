@@ -93,6 +93,9 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
                     //Para aceptar ciclos
                     return false;
                 }
+            }else if(caracterApuntador == '#')
+            {
+                return true;
             }
             return false;
         }

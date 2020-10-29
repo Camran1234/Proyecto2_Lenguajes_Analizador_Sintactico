@@ -7,24 +7,21 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Gramaticas
 {
-    class Sino : InfoGramatica
+    class True: InfoGramatica
     {
-        public Sino()
+        public True()
         {
-            this.nombre = "Sino";
+            this.nombre = "True";
             this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
-          
-
             this.transiciones = new Transicion[4];
-            transiciones[0] = new Transicion('S', "S0", "S1");
-            transiciones[1] = new Transicion('I', "S1", "S2");
-            transiciones[2] = new Transicion('N', "S2", "S3");
-            transiciones[3] = new Transicion('O', "S3", "S4");
+            transiciones[0] = new Transicion('T', "S0", "S1");
+            transiciones[1] = new Transicion('r', "S1", "S2");
+            transiciones[2] = new Transicion('u', "S2", "S3");
+            transiciones[3] = new Transicion('e', "S3", "S4");
         }
-
     }
 }

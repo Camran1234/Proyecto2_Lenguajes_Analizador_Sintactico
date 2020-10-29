@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Gramaticas
 {
-    class ParentesisAbrir : InfoGramatica
+    class _Char : InfoGramatica
     {
-        public ParentesisAbrir()
+
+        public _Char()
         {
-            this.nombre = "ParentesisAbrir";
+            this.nombre = "char";
             this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
-            this.transiciones = new Transicion[1];
-            transiciones[0] = new Transicion('(', "S0", "S1");
+            char comilla = '\'';
+            this.transiciones = new Transicion[3];
+            transiciones[0] = new Transicion(comilla, "S0", "S1");
+            transiciones[1] = new Transicion('#', "S1", "S2");
+            transiciones[2] = new Transicion(comilla, "S2", "S3");
         }
     }
 }

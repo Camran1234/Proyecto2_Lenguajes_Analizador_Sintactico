@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Gramaticas
 {
-    class ParentesisAbrir : InfoGramatica
+    class LlaveCerrar: InfoGramatica
     {
-        public ParentesisAbrir()
+        public LlaveCerrar()
         {
-            this.nombre = "ParentesisAbrir";
+            this.nombre = "LlaveCerrar";
             this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
             this.transiciones = new Transicion[1];
-            transiciones[0] = new Transicion('(', "S0", "S1");
+            transiciones[0] = new Transicion('}', "S0", "S1");
         }
     }
 }

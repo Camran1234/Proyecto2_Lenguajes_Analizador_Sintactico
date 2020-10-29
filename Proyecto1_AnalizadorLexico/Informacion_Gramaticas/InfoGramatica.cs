@@ -9,7 +9,6 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
     class InfoGramatica
     {
         protected string nombre;
-        protected State[] nombresEstados;
         protected Transicion[] transiciones;
         //Indicaremos en que estado nos encontramos
         protected int actualTransition = 0;
@@ -18,15 +17,7 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
             this.MakeStatesAndTransition();
         }
 
-        /// <summary>
-        /// Obtiene los estados del automata
-        /// </summary>
-        /// <returns></returns>
-        public State[] GetStates()
-        {
-            return nombresEstados;
-        }
-
+        
         /// <summary>
         /// Obtiene las transiciones del automata
         /// </summary>

@@ -48,8 +48,6 @@
   <ItemGroup>
     <Compile Include="Analizador_Lexico\AnalizadorLexico.cs" />
     <Compile Include="Analizador_Lexico\Lenguaje.cs" />
-    <Compile Include="Analizador_Lexico\Gramatica.cs" />
-    <Compile Include="Analizador_Lexico\Lectura.cs" />
     <Compile Include="Analizador_Lexico\PintarElemento.cs" />
     <Compile Include="Analizador_Sintactico\Automata_Pila.cs" />
     <Compile Include="Archivo\Error.cs" />
@@ -60,6 +58,8 @@
     <Compile Include="Gramaticas\And.cs" />
     <Compile Include="Gramaticas\Boolean_.cs" />
     <Compile Include="Gramaticas\Cadena.cs" />
+    <Compile Include="Gramaticas\Coma.cs" />
+    <Compile Include="Gramaticas\_Char.cs" />
     <Compile Include="Gramaticas\Chart.cs" />
     <Compile Include="Gramaticas\Colon.cs" />
     <Compile Include="Gramaticas\ComentarioUnaLinea.cs" />
@@ -71,11 +71,14 @@
     <Compile Include="Gramaticas\Disminuir.cs" />
     <Compile Include="Gramaticas\Division.cs" />
     <Compile Include="Gramaticas\Entero.cs" />
+    <Compile Include="Gramaticas\False.cs" />
     <Compile Include="Gramaticas\Hacer.cs" />
     <Compile Include="Gramaticas\Hasta.cs" />
     <Compile Include="Gramaticas\Igual.cs" />
     <Compile Include="Gramaticas\Incrementar.cs" />
     <Compile Include="Gramaticas\Incremento.cs" />
+    <Compile Include="Gramaticas\LlaveAbierta.cs" />
+    <Compile Include="Gramaticas\LlaveCerrar.cs" />
     <Compile Include="Gramaticas\Mayor.cs" />
     <Compile Include="Gramaticas\MayorIgual.cs" />
     <Compile Include="Gramaticas\Menor.cs" />
@@ -84,16 +87,18 @@
     <Compile Include="Gramaticas\Multiplicacion.cs" />
     <Compile Include="Gramaticas\Negacion.cs" />
     <Compile Include="Gramaticas\Or.cs" />
+    <Compile Include="Gramaticas\Palabra.cs" />
     <Compile Include="Gramaticas\ParentesisAbrir.cs" />
     <Compile Include="Gramaticas\ParentesisCerrar.cs" />
     <Compile Include="Gramaticas\Resta.cs" />
     <Compile Include="Gramaticas\Si.cs" />
     <Compile Include="Gramaticas\Sino.cs" />
     <Compile Include="Gramaticas\Sino_Si.cs" />
+    <Compile Include="Gramaticas\_String.cs" />
     <Compile Include="Gramaticas\Suma.cs" />
+    <Compile Include="Gramaticas\True.cs" />
     <Compile Include="Gramaticas\Variable.cs" />
     <Compile Include="Informacion_Gramaticas\InfoGramatica.cs" />
-    <Compile Include="Informacion_Gramaticas\State.cs" />
     <Compile Include="Informacion_Gramaticas\Transicion.cs" />
     <Compile Include="Interfaces\Form1.cs">
       <SubType>Form</SubType>

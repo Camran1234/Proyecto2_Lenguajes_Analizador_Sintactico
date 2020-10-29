@@ -7,22 +7,21 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Gramaticas
 {
-    class Variable : InfoGramatica
+    class _String: InfoGramatica
     {
-        public Variable()
+        public _String()
         {
-            this.nombre = "Variable";
+            this.nombre = "String";
             this.MakeStatesAndTransition();
         }
+
         public override void MakeStatesAndTransition()
         {
-           
-
             this.transiciones = new Transicion[3];
-            transiciones[0] = new Transicion('_', "S0", "S1");
+            transiciones[0] = new Transicion('\"', "S0", "S1");
             transiciones[1] = new Transicion('$', "S1", "S1");
-            transiciones[1].AssignNextCharacterToNotIgnore(' ');
-            transiciones[2] = new Transicion(' ', "S1", "S2");
+            transiciones[1].AssignNextCharacterToNotIgnore('\"');
+            transiciones[2] = new Transicion('\"', "S1", "S2");
         }
     }
 }

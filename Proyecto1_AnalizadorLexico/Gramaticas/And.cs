@@ -14,15 +14,12 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
         public And() 
         {
             this.nombre = "And";
-
+            this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
-            this.nombresEstados = new State[3];
-            nombresEstados[0] = new State("S0", false);
-            nombresEstados[1] = new State("S1", false);
-            nombresEstados[2] = new State("S2", true);
+           
 
             this.transiciones = new Transicion[2];
             transiciones[0] = new Transicion('&', "S0", "S1");
