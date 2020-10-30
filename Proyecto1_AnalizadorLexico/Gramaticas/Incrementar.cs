@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Incrementar()
         {
-            this.nombre = "Incrementar";
+            this.nombre = "++";
             this.MakeStatesAndTransition();
         }
 

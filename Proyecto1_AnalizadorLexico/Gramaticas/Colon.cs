@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Colon()
         {
-            this.nombre = "Colon";
+            this.nombre = ";";
             this.MakeStatesAndTransition();
         }
 

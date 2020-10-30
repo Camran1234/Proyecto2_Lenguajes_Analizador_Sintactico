@@ -19,7 +19,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         //Tambien analizaremos la posicion y poder pintar esa parte del texto en el richtTextBox del IDE
         //la variable lengthOfToken se utilizara para usar el metodo de richTextBox Select que seleccionaremos esa parte
         //luego con SelectColor cambiamos el color
-        private InfoGramatica[] gramaticas = new InfoGramatica[42];
+        private InfoGramatica[] gramaticas = new InfoGramatica[44];
         private List<int> automatasParaAvanzar = new List<int>();
         private int resultado;
         private PintarElemento pintador;
@@ -80,6 +80,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             gramaticas[39] = new LlaveAbierta();
             gramaticas[40] = new LlaveCerrar();
             gramaticas[41] = new Coma();
+            gramaticas[42] = new Imprimir();
+            gramaticas[43] = new Leer();
         }
 
         public Boolean ContainChar(char caracter, int index)
@@ -106,6 +108,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     if(automatasParaAvanzar.Count == 0)
                     {
                         lexema = "";
+                        tokenVuelta = false;
+                        tokenAddedWhileModusOperandum = false;
                     }
                 }
                 else
@@ -133,6 +137,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                 if (automatasParaAvanzar.Count == 0)
                 {
                     lexema = "";
+                    tokenVuelta = false;
                     tokenAddedWhileModusOperandum = false;
                     return true;
                 }
@@ -152,7 +157,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             if (solucionEncontrada == false)
             {
                 //Agregamos el token desconocido
-                if(caracter !=' ' && caracter != '\n')
+                if(caracter !=' ' && caracter != '\n' && caracter != '\r' && caracter != '\t')
                 {
                     this.tokens.Add(new Token("?Error", Convert.ToString(caracter)));
                     lexema = "";
@@ -271,7 +276,18 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
         public int GetNoTokens()
         {
             this.ConvertNewTokens();
+            this.CleanTokens();
             return tokens.Count;
+        }
+
+        private void CleanTokens()
+        {
+            for (int indexToken = 0 ; indexToken < tokens.Count; indexToken++){
+                if (tokens[indexToken].ReturnLexema().Equals(""))
+                {
+                    tokens.RemoveAt(indexToken);
+                }
+            }
         }
 
         /// <summary>
@@ -351,6 +367,11 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             {
                 return 3;
             }
+        }
+
+        public List<Token> ReturnTokens()
+        {
+            return tokens;
         }
     }
 }

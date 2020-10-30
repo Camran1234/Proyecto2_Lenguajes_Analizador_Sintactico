@@ -45,11 +45,11 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     case "Chart":
                         color = Color.Brown;
                         break;
-                    case "Igual":
+                    case "=":
                         sizeToken = 1;
                         color = Color.Pink;
                         break;
-                    case "Colon":
+                    case ";":
                         sizeToken = 1;
                         color = Color.Pink;
                         break;
@@ -67,14 +67,14 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                             sizeToken = cadena.Length;
                             color = Color.Red;
                         }
-                        else if (token.Equals("Suma") || token.Equals("Resta") || token.Equals("Multiplicacion") || token.Equals("Division") || token.Equals("Mayor") || token.Equals("Menor")
-                           || token.Equals("ParentesisAbrir") || token.Equals("ParentesisCerrar"))
+                        else if (token.Equals("+") || token.Equals("-") || token.Equals("*") || token.Equals("/") || token.Equals(">") || token.Equals("<")
+                           || token.Equals("(") || token.Equals(")"))
                         {
                             sizeToken = 1;
                             color = Color.Blue;
                         }
-                        else if (token.Equals("Incrementar") || token.Equals("Disminuir") || token.Equals("MayorIgual") || token.Equals("MenorIgual")
-                           || token.Equals("Comparacion") || token.Equals("Diferente") || token.Equals("Or") || token.Equals("And") || token.Equals("Negacion"))
+                        else if (token.Equals("++") || token.Equals("--") || token.Equals(">=") || token.Equals("<=")
+                           || token.Equals("==") || token.Equals("!=") || token.Equals("||") || token.Equals("&&") || token.Equals("!"))
                         {
                             sizeToken = 2;
                             color = Color.Blue;

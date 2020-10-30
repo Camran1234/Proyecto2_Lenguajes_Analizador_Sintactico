@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Mayor()
         {
-            this.nombre = "Mayor";
+            this.nombre = ">";
             this.MakeStatesAndTransition();
         }
 

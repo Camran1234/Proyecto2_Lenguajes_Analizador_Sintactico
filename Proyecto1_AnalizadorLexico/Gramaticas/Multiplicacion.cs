@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Multiplicacion()
         {
-            this.nombre = "Multiplicacion";
+            this.nombre = "*";
             this.MakeStatesAndTransition();
         }
 

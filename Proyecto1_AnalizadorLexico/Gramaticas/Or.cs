@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Or()
         {
-            this.nombre = "Or";
+            this.nombre = "||";
             this.MakeStatesAndTransition();
         }
 

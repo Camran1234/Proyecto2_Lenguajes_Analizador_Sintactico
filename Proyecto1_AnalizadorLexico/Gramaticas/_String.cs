@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public _String()
         {
-            this.nombre = "String";
+            this.nombre = "string";
             this.MakeStatesAndTransition();
         }
 

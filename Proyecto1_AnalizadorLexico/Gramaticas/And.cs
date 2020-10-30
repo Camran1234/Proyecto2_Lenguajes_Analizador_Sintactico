@@ -13,7 +13,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
         
         public And() 
         {
-            this.nombre = "And";
+            this.nombre = "&&";
             this.MakeStatesAndTransition();
         }
 

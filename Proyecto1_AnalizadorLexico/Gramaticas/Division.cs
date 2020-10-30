@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Division()
         {
-            this.nombre = "Division";
+            this.nombre = "/";
             this.MakeStatesAndTransition();
         }
 

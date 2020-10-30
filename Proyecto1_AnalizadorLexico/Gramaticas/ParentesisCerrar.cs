@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public ParentesisCerrar()
         {
-            this.nombre = "ParentesisCerrar";
+            this.nombre = ")";
             this.MakeStatesAndTransition();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proyecto1_AnalizadorLexico.Archivo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,11 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             }
             
             return false;
+        }
+
+        public List<Token> ReturnTokens()
+        {
+            return lenguaje.ReturnTokens();
         }
 
         public void AddTokens(RichTextBox richText)

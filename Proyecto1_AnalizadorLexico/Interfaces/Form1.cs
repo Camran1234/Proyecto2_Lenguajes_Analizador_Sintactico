@@ -1,4 +1,5 @@
 ﻿using Proyecto1_AnalizadorLexico.Analizador_Lexico;
+using Proyecto1_AnalizadorLexico.Analizador_Sintactico;
 using Proyecto1_AnalizadorLexico.Archivo;
 using Proyecto1_AnalizadorLexico.Interfaces;
 using System;
@@ -34,6 +35,7 @@ namespace Proyecto1_AnalizadorLexico
                 richTextBoxTokens.ResetText();
                 AnalizadorLexico analizador = new AnalizadorLexico(richTextBoxCuadroCompilacion);
                 Int64 size = richTextBoxCuadroCompilacion.Text.Length;
+                Boolean resultado;
                 for (int indexCuadro=0; indexCuadro < size; indexCuadro++)
                 {
                     analizador.AnalizarLexema(richTextBoxCuadroCompilacion.Text[indexCuadro],indexCuadro);
@@ -44,6 +46,17 @@ namespace Proyecto1_AnalizadorLexico
                 }
                 analizador.AddMistakesTokens(this.richTextBoxCuadroError, this.richTextBoxCuadroCompilacion);
                 analizador.AddTokens(this.richTextBoxTokens);
+                AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
+                resultado = analizadorSintactico.EmpezarAnalizador(analizador.ReturnTokens());
+                analizador = null;
+                if (resultado)
+                {
+                    MessageBox.Show("ANALIZADOR SINTACTICO CORRECTO");
+                }
+                else
+                {
+                    MessageBox.Show("ANALIZADOR SINTACTICO NO CORRECTO");
+                }
                 /*lectura = new Lectura(this.richTextBoxCuadroCompilacion);
                 string texto = richTextBoxCuadroCompilacion.Text;
                 //Leemos caracter por caracter y lo mandamos a nuestro objeto Lectura para que lo lea y establezca

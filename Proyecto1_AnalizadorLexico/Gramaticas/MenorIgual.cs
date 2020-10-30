@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public MenorIgual()
         {
-            this.nombre = "MenorIgual";
+            this.nombre = "<=";
             this.MakeStatesAndTransition();
         }
 

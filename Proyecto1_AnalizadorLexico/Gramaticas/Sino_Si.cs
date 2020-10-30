@@ -11,14 +11,12 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Sino_Si()
         {
-            this.nombre = "Sino_Si";
+            this.nombre = "SINO_SI";
             this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
-         
-
             this.transiciones = new Transicion[7];
             transiciones[0] = new Transicion('S', "S0", "S1");
             transiciones[1] = new Transicion('I', "S1", "S2");

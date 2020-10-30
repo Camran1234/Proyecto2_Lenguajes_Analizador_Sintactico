@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Disminuir()
         {
-            this.nombre = "Disminuir";
+            this.nombre = "--";
             this.MakeStatesAndTransition();
         }
 

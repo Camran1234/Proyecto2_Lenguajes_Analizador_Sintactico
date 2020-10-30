@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Igual()
         {
-            this.nombre = "Igual";
+            this.nombre = "=";
             this.MakeStatesAndTransition();
         }   
 

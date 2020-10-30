@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Diferente()
         {
-            this.nombre = "Diferente";
+            this.nombre = "!=";
             this.MakeStatesAndTransition();
         }
 

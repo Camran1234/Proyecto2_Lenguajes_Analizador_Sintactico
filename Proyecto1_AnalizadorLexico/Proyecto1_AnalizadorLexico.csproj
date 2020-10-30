@@ -49,7 +49,9 @@
     <Compile Include="Analizador_Lexico\AnalizadorLexico.cs" />
     <Compile Include="Analizador_Lexico\Lenguaje.cs" />
     <Compile Include="Analizador_Lexico\PintarElemento.cs" />
+    <Compile Include="Analizador_Sintactico\AnalizadorSintactico.cs" />
     <Compile Include="Analizador_Sintactico\Automata_Pila.cs" />
+    <Compile Include="Analizador_Sintactico\Expresion.cs" />
     <Compile Include="Archivo\Error.cs" />
     <Compile Include="Archivo\ManipuladorArchivo.cs" />
     <Compile Include="Archivo\ManipuladorProyecto.cs" />
@@ -59,6 +61,8 @@
     <Compile Include="Gramaticas\Boolean_.cs" />
     <Compile Include="Gramaticas\Cadena.cs" />
     <Compile Include="Gramaticas\Coma.cs" />
+    <Compile Include="Gramaticas\Imprimir.cs" />
+    <Compile Include="Gramaticas\Leer.cs" />
     <Compile Include="Gramaticas\_Char.cs" />
     <Compile Include="Gramaticas\Chart.cs" />
     <Compile Include="Gramaticas\Colon.cs" />
@@ -87,7 +91,6 @@
     <Compile Include="Gramaticas\Multiplicacion.cs" />
     <Compile Include="Gramaticas\Negacion.cs" />
     <Compile Include="Gramaticas\Or.cs" />
-    <Compile Include="Gramaticas\Palabra.cs" />
     <Compile Include="Gramaticas\ParentesisAbrir.cs" />
     <Compile Include="Gramaticas\ParentesisCerrar.cs" />
     <Compile Include="Gramaticas\Resta.cs" />

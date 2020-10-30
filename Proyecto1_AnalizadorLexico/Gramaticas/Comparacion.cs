@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Comparacion()
         {
-            this.nombre = "Comparacion";
+            this.nombre = "==";
         }
 
         public override void MakeStatesAndTransition()

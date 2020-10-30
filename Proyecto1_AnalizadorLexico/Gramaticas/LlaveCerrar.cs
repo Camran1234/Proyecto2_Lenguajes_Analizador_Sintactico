@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public LlaveCerrar()
         {
-            this.nombre = "LlaveCerrar";
+            this.nombre = "}";
             this.MakeStatesAndTransition();
         }
 

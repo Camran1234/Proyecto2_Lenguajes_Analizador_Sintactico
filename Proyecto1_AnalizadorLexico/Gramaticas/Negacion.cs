@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Negacion()
         {
-            this.nombre = "Negacion";
+            this.nombre = "!";
             this.MakeStatesAndTransition();
         }
 

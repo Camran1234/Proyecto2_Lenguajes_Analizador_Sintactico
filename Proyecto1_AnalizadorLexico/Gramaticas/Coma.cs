@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Coma()
         {
-            this.nombre = "Coma";
+            this.nombre = ",";
             this.MakeStatesAndTransition();
         }
 

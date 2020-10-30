@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Resta()
         {
-            this.nombre = "Resta";
+            this.nombre = "-";
             this.MakeStatesAndTransition();
         }
 

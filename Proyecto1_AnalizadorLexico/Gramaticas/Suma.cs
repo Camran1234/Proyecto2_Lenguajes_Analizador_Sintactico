@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public Suma()
         {
-            this.nombre = "Suma";
+            this.nombre = "+";
             this.MakeStatesAndTransition();
         }
 

@@ -11,7 +11,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
     {
         public LlaveAbierta()
         {
-            this.nombre = "LlaveAbrir";
+            this.nombre = "{";
             this.MakeStatesAndTransition();
         }
 

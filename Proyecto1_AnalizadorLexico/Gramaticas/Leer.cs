@@ -7,25 +7,23 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Gramaticas
 {
-    class Palabra : InfoGramatica
+    class Leer: InfoGramatica
     {
-
-        public Palabra()
+        public Leer()
         {
-            this.nombre = "Palabra";
+            this.nombre = "Leer";
             this.MakeStatesAndTransition();
         }
 
         public override void MakeStatesAndTransition()
         {
 
-
-            this.transiciones = new Transicion[2];
-            transiciones[0] = new Transicion('$', "S0", "S0");
-            transiciones[0].AssignNextCharacterToNotIgnore(' ');
-            transiciones[1] = new Transicion(' ', "S0", "S1");
+            this.transiciones = new Transicion[4];
+            transiciones[0] = new Transicion('L', "S0", "S1");
+            transiciones[1] = new Transicion('e', "S1", "S2");
+            transiciones[2] = new Transicion('e', "S2", "S3");
+            transiciones[3] = new Transicion('r', "S3", "S4");
             
-
         }
     }
 }

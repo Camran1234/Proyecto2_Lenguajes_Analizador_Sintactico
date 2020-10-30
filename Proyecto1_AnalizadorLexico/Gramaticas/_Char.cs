@@ -12,7 +12,7 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
 
         public _Char()
         {
-            this.nombre = "char";
+            this.nombre = "char'";
             this.MakeStatesAndTransition();
         }
 
