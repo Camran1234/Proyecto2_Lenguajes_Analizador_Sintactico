@@ -47,7 +47,7 @@ namespace Proyecto1_AnalizadorLexico
                 analizador.AddMistakesTokens(this.richTextBoxCuadroError, this.richTextBoxCuadroCompilacion);
                 analizador.AddTokens(this.richTextBoxTokens);
                 AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
-                resultado = analizadorSintactico.EmpezarAnalizador(analizador.ReturnTokens());
+               resultado = analizadorSintactico.EmpezarAnalizador(analizador.ReturnTokens());
                 analizador = null;
                 if (resultado)
                 {

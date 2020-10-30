@@ -91,7 +91,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 
             if (this.automatasParaAvanzar.Count == 0)
             {
-                if (caracter != ' ' && caracter != '\n')
+                if (caracter != ' ' && caracter != '\n' && caracter != '\t')
                 {
                     for (int indexGramatica = 0; indexGramatica < this.gramaticas.Length; indexGramatica++)
                     {
@@ -132,6 +132,9 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     if (resultado == 0 && automatasParaAvanzar.Count > 0 && indexGramatica<automatasParaAvanzar.Count)
                     {
                         goto tryAgain2;
+                    }else if (resultado == 1)
+                    {
+                        goto tryAgain2;
                     }
                 }
                 if (automatasParaAvanzar.Count == 0)
@@ -157,7 +160,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
             if (solucionEncontrada == false)
             {
                 //Agregamos el token desconocido
-                if(caracter !=' ' && caracter != '\n' && caracter != '\r' && caracter != '\t')
+                if(caracter !=' ' && caracter != '\n'  && caracter != '\t')
                 {
                     this.tokens.Add(new Token("?Error", Convert.ToString(caracter)));
                     lexema = "";

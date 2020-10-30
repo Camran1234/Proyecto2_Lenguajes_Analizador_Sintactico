@@ -49,16 +49,23 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
                 if (apuntadores[indexListas].Equals(token))
                 {
                     //Recibimos la cadena
-                    expresion =  expresionApuntada[indexListas];
+                    expresion = expresionApuntada[indexListas];
                     palabras = expresion.Split(' ');
                     //Invertimos la cadena
                     expresion = "";
-                    for(int indexArray=palabras.Length-1;indexArray>=0;indexArray--)
+                    for (int indexArray = palabras.Length - 1; indexArray >= 0; indexArray--)
                     {
-                        expresion += palabras[indexArray] + " "; 
+                        expresion += palabras[indexArray] + " ";
                     }
                     palabras = expresion.Split(' ');
-                    return palabras;
+                    List<string> terminales = new List<string>(palabras);
+                    terminal:
+                    terminales.Remove("");
+                    if (terminales.Contains(""))
+                    {
+                        goto terminal;
+                    }
+                    return terminales.ToArray();
                 }
             }
             return null;

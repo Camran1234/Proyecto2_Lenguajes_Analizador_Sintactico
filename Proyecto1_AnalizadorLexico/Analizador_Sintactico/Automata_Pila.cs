@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
 {
@@ -26,16 +27,22 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         /// <param name="token"></param>
         public Boolean AgregarElemento(string[] token, string lastWord)
         {
-            if(elemento[elemento.Count - 1].Equals(lastWord))
+
+            elemento.RemoveAt(elemento.Count - 1);
+            foreach (string palabra in token)
             {
-                elemento.RemoveAt(elemento.Count - 1);
-                foreach (string palabra in token)
+                if (!palabra.Equals("e"))
                 {
                     elemento.Add(palabra);
-                    Console.WriteLine("Se agrego a la pila: "+palabra);
                     posicion++;
                 }
             }
+            string hola = "";
+            for (int indexElemento =0; indexElemento< elemento.Count; indexElemento++)
+            {
+                hola += elemento[indexElemento];
+            }
+            MessageBox.Show("Analisis: " + hola);
             return false;   
         }
 
@@ -50,7 +57,6 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             if (elemento[elemento.Count - 1].Equals(token))
             {
                 elemento.RemoveAt(elemento.Count-1);
-                Console.WriteLine("Se removio de la pila: " + token);
                 posicion--;
                 return true;
             }
@@ -66,7 +72,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         /// <returns></returns>
         public Boolean ComprobarAutomataCorrecto()
         {
-            if (posicion == 0)
+            if (this.GetLastElement().Equals("$"))
             {
                 return true;
             }

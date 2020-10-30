@@ -10,7 +10,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
 {
     class AnalizadorSintactico
     {
-        private Expresion[] expresiones = new Expresion[43];
+        private Expresion[] expresiones = new Expresion[44];
         public AnalizadorSintactico()
         {
             expresiones[0] = new Expresion("E");
@@ -27,12 +27,13 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[4].AddTokensApunta("Chart", "A G");
             expresiones[4].AddTokensApunta("Decimal", "A G");
             expresiones[4].AddTokensApunta("Boolean", "A G");
-            expresiones[4].AddTokensApunta("SI", "SG");
+            expresiones[4].AddTokensApunta("SI", "S G");
             expresiones[4].AddTokensApunta("Mientras", "M G");
             expresiones[4].AddTokensApunta("Hacer", "H G");
             expresiones[4].AddTokensApunta("Desde", "D G");
             expresiones[4].AddTokensApunta("Imprimir", "I G");
             expresiones[4].AddTokensApunta("Leer", "L G");
+            expresiones[4].AddTokensApunta("Variable", "A G");
             expresiones[4].AddTokensApunta("}", "_Y");
             expresiones[5] = new Expresion("Pa");
             expresiones[5].AddTokensApunta("(", "(");
@@ -44,12 +45,14 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[7].AddTokensApunta("Chart", "P Q");
             expresiones[7].AddTokensApunta("Decimal", "P Q");
             expresiones[7].AddTokensApunta("Boolean", "P Q");
+            expresiones[7].AddTokensApunta("Variable", "P Q");
             expresiones[8] = new Expresion("P");
             expresiones[8].AddTokensApunta("Entero", "Entero V K");
             expresiones[8].AddTokensApunta("Cadena", "Cadena V K");
             expresiones[8].AddTokensApunta("Chart", "Chart V K");
             expresiones[8].AddTokensApunta("Decimal", "Decimal V K");
             expresiones[8].AddTokensApunta("Boolean", "Boolean V K");
+            expresiones[8].AddTokensApunta("Variable", "V Fe");
             expresiones[9] = new Expresion("_L");
             expresiones[9].AddTokensApunta("numeroEntero", "W C");
             expresiones[9].AddTokensApunta("string", "W C");
@@ -58,10 +61,13 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[9].AddTokensApunta("True", "W C");
             expresiones[9].AddTokensApunta("False", "W C");
             expresiones[9].AddTokensApunta("Variable", "W C");
+            expresiones[9].AddTokensApunta(")", "C");
+            expresiones[9].AddTokensApunta("&&", "C");
+            expresiones[9].AddTokensApunta("||", "C");
             expresiones[10] = new Expresion("V");
             expresiones[10].AddTokensApunta("Variable", "Variable");
             expresiones[11] = new Expresion("K");
-            expresiones[11].AddTokensApunta("=", "= _K Q");
+            expresiones[11].AddTokensApunta("=", "= _K ");
             expresiones[11].AddTokensApunta(",", ", V K'");
             expresiones[12] = new Expresion("Q");
             expresiones[12].AddTokensApunta(";", ";");
@@ -83,7 +89,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[17] = new Expresion("_S");
             expresiones[17].AddTokensApunta("{", "Y G O'");
             expresiones[18] = new Expresion("O");
-            expresiones[18].AddTokensApunta("SI", "Si Pa T");
+            expresiones[18].AddTokensApunta("SI", "SI Pa T");
             expresiones[19] = new Expresion("O'");
             expresiones[19].AddTokensApunta("Entero", "e");
             expresiones[19].AddTokensApunta("Cadena", "e");
@@ -91,7 +97,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[19].AddTokensApunta("Decimal", "e");
             expresiones[19].AddTokensApunta("Boolean", "e");
             expresiones[19].AddTokensApunta("SI", "e");
-            expresiones[19].AddTokensApunta("SINO_SI", "SINO_SI T _S");
+            expresiones[19].AddTokensApunta("SINO_SI", "SINO_SI Pa T _S");
             expresiones[19].AddTokensApunta("SINO", "SINO _S");
             expresiones[19].AddTokensApunta("Mientras", "e");
             expresiones[19].AddTokensApunta("Hacer", "e");
@@ -110,29 +116,30 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[24] = new Expresion("_H");
             expresiones[24].AddTokensApunta("Hacer", "Hacer Y");
             expresiones[25] = new Expresion("Z");
-            expresiones[25].AddTokensApunta("numeroEntero", "G _M Q");
-            expresiones[25].AddTokensApunta("Cadena", "G _M Q");
-            expresiones[25].AddTokensApunta("Chart", "G _M Q");
-            expresiones[25].AddTokensApunta("numeroDecimal", "G _M Q");
-            expresiones[25].AddTokensApunta("Boolean", "G _M Q");
-            expresiones[25].AddTokensApunta("SI", "G _M Q");
-            expresiones[25].AddTokensApunta("Mientras", "G _M Q");
-            expresiones[25].AddTokensApunta("Hacer", "G _M Q");
-            expresiones[25].AddTokensApunta("Desde", "G _M Q");
-            expresiones[25].AddTokensApunta("Imprimir", "G _M Q");
-            expresiones[25].AddTokensApunta("Leer", "G _M Q");
-            expresiones[25].AddTokensApunta("}", "G _M Q");
+            expresiones[25].AddTokensApunta("numeroEntero", "G _M");
+            expresiones[25].AddTokensApunta("Cadena", "G _M");
+            expresiones[25].AddTokensApunta("Chart", "G _M");
+            expresiones[25].AddTokensApunta("numeroDecimal", "G _M");
+            expresiones[25].AddTokensApunta("Variable", "G _M");
+            expresiones[25].AddTokensApunta("Boolean", "G _M");
+            expresiones[25].AddTokensApunta("SI", "G _M");
+            expresiones[25].AddTokensApunta("Mientras", "G _M");
+            expresiones[25].AddTokensApunta("Hacer", "G _M");
+            expresiones[25].AddTokensApunta("Desde", "G _M");
+            expresiones[25].AddTokensApunta("Imprimir", "G _M");
+            expresiones[25].AddTokensApunta("Leer", "G _M");
+            expresiones[25].AddTokensApunta("}", "G _M");
             expresiones[26] = new Expresion("T");
-            expresiones[26].AddTokensApunta("numeroEntero", "W_P_L");
-            expresiones[26].AddTokensApunta("string", "W_P_L");
-            expresiones[26].AddTokensApunta("char'", "W_P_L");
-            expresiones[26].AddTokensApunta("numeroDecimal", "W_P_L");
-            expresiones[26].AddTokensApunta("True", "W_P_L");
-            expresiones[26].AddTokensApunta("False", "W_P_L");
-            expresiones[26].AddTokensApunta("Variable", "W_P_L");
+            expresiones[26].AddTokensApunta("numeroEntero", "W _P _L");
+            expresiones[26].AddTokensApunta("string", "W _P _L");
+            expresiones[26].AddTokensApunta("char'", "W _P _L");
+            expresiones[26].AddTokensApunta("numeroDecimal", "W _P _L");
+            expresiones[26].AddTokensApunta("True", "W _P _L");
+            expresiones[26].AddTokensApunta("False", "W _P _L");
+            expresiones[26].AddTokensApunta("Variable", "W _P _L");
             expresiones[26].AddTokensApunta("!", "_W C");
             expresiones[27] = new Expresion("_W");
-            expresiones[27].AddTokensApunta("!", "! V");
+            expresiones[27].AddTokensApunta("!", "! W");
             expresiones[28] = new Expresion("W");
             expresiones[28].AddTokensApunta("numeroEntero", "numeroEntero");
             expresiones[28].AddTokensApunta("string", "string");
@@ -183,6 +190,10 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             expresiones[41].AddTokensApunta("Leer", "Leer Pa V");
             expresiones[42] = new Expresion("_Q");
             expresiones[42].AddTokensApunta(")", "Pc Q");
+            expresiones[43] = new Expresion("Fe");
+            expresiones[43].AddTokensApunta("++", "++");
+            expresiones[43].AddTokensApunta("--", "--");
+            expresiones[43].AddTokensApunta("=", "K");
         }
 
         public Boolean EmpezarAnalizador(List<Token> tokens)
@@ -192,31 +203,40 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             string[] palabras;
             Boolean necesitaNuevaExpresion;
             int acceso;
-            for (int indexToken =0; indexToken<tokens.Count; indexToken++)
+            for (int indexToken = 0; indexToken < tokens.Count; indexToken++)
             {
+                again:
                 token = tokens[indexToken].ReturnTokenName();
-                necesitaNuevaExpresion=pila.QuitarElemento(token);
-                if (!necesitaNuevaExpresion)
+                if (!token.Equals("ComentarioUnaLinea") && !token.Equals("ComentarioVariasLineas"))
                 {
-                    //Devuelve el index del token
-                    acceso = this.AnalizeToken(pila.GetLastElement());
-                    if (acceso != -1)
+                    necesitaNuevaExpresion = pila.QuitarElemento(token);
+                    if (!necesitaNuevaExpresion)
                     {
-                        palabras = expresiones[acceso].ReturnExpresionApuntadora(token);
-                        if(palabras == null)
+                        //Devuelve el index del token
+                        acceso = this.AnalizeToken(pila.GetLastElement());
+                        if (acceso != -1)
                         {
-                            MessageBox.Show(pila.GetLastElement() + " " + acceso+ " " +token);
+                            palabras = expresiones[acceso].ReturnExpresionApuntadora(token);
+                            if (palabras == null)
+                            {
+                                MessageBox.Show("elemento1: " + pila.GetLastElement() + " " + acceso + " " + token);
+                                return false;
+                            }
+                            pila.AgregarElemento(palabras, token);
+                        }
+                        else
+                        {
+                            //Codigo Para indicar que ya no se pudo continuar el automata
+                            MessageBox.Show("elemento2: " + pila.GetLastElement() + " " + acceso + " " + token);
                             return false;
                         }
-                        pila.AgregarElemento(palabras,token);   
-                    }
-                    else
-                    {
-                        MessageBox.Show(pila.GetLastElement() + " " +acceso);
-                        //Codigo Para indicar que ya no se pudo continuar el automata
-                        return false;
+                        if (!pila.QuitarElemento(token))
+                        {
+                            goto again;
+                        }
                     }
                 }
+
             }
             if (pila.ComprobarAutomataCorrecto())
             {
@@ -224,6 +244,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
                 
                 return true;
             }
+            MessageBox.Show("elementoAiuda: " + pila.GetLastElement());
             return false;
         }
 

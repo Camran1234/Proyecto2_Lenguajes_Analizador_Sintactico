@@ -17,8 +17,6 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
 
         public override void MakeStatesAndTransition()
         {
-          
-
             this.transiciones = new Transicion[4];
             transiciones[0] = new Transicion('S', "S0", "S1");
             transiciones[1] = new Transicion('I', "S1", "S2");

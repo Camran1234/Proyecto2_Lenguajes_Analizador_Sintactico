@@ -21,13 +21,13 @@ namespace Proyecto1_AnalizadorLexico.Gramaticas
 
             this.transiciones = new Transicion[8];
             transiciones[0] = new Transicion('I', "S0", "S1");
-            transiciones[1] = new Transicion('M', "S1", "S2");
-            transiciones[2] = new Transicion('P', "S2", "S3");
-            transiciones[3] = new Transicion('R', "S3", "S4");
-            transiciones[4] = new Transicion('I', "S4", "S5");
-            transiciones[5] = new Transicion('M', "S5", "S6");
-            transiciones[6] = new Transicion('I', "S6", "S7");
-            transiciones[7] = new Transicion('R', "S7", "S8");
+            transiciones[1] = new Transicion('m', "S1", "S2");
+            transiciones[2] = new Transicion('p', "S2", "S3");
+            transiciones[3] = new Transicion('r', "S3", "S4");
+            transiciones[4] = new Transicion('i', "S4", "S5");
+            transiciones[5] = new Transicion('m', "S5", "S6");
+            transiciones[6] = new Transicion('i', "S6", "S7");
+            transiciones[7] = new Transicion('r', "S7", "S8");
 
         }
     }
