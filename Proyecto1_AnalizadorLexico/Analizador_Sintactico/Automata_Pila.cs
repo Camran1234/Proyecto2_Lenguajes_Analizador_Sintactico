@@ -84,7 +84,12 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
                 try
                 {
                     arbol.CloseFile();
-                    arbol.CallGenerateFile("Hola");
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "jpg files (*.jpg)|*.jpg";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        arbol.CallGenerateFile(saveFileDialog.FileName);
+                    }
                 }catch(Exception ex)
                 {
                     MessageBox.Show(ex.Message);

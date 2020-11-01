@@ -60,8 +60,9 @@ namespace Proyecto1_AnalizadorLexico.Arbol_Sintactico
         /// <param name="imgFileName"></param>
         public void CallGenerateFile( string imgFileName)
         {
-            string img = path + "\\"+imgFileName+".png";
+            string img = imgFileName;
             this.GenerateImg( img);
+            File.Delete(pathFile);
         }
 
         /// <summary>
@@ -72,13 +73,15 @@ namespace Proyecto1_AnalizadorLexico.Arbol_Sintactico
         {
             try
             {
-                string comandoGenerador = "dot.exe -Tpng " + nameFile + " -o " + imgFileName + " ";
+                string comandoGenerador = "dot.exe -Tpng \"" + pathFile + "\" -o " + imgFileName;
                 var comando = string.Format(comandoGenerador);
                 var comandoIniciador = new System.Diagnostics.ProcessStartInfo("cmd", "/C" + comando);
                 var comandoProceso = new System.Diagnostics.Process();
                 comandoProceso.StartInfo = comandoIniciador;
                 comandoProceso.Start();
                 comandoProceso.WaitForExit();
+                File.Delete(pathFile);
+                MessageBox.Show("Imagen creada en: " + imgFileName);
             }
             catch(Exception ex)
             {
