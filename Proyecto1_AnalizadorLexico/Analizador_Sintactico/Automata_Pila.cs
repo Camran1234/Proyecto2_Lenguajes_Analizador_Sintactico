@@ -1,4 +1,5 @@
 ﻿using Proyecto1_AnalizadorLexico.Analizador_Lexico;
+using Proyecto1_AnalizadorLexico.Arbol_Sintactico;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
     {
         private int posicion = 0;
         private List<string> elemento = new List<string>();
-        
+        private ArbolSintactico arbol;
+        private NodoHoja nodo;
         /// <summary>
         /// La pila siempre empieza con $E
         /// </summary>
@@ -20,6 +22,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         {
             elemento.Add("$");
             elemento.Add("E");
+            nodo = new NodoHoja("E", 0);
+            arbol = new ArbolSintactico();
         }
         /// <summary>
         /// Agrega elementos a la pila
@@ -27,7 +31,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         /// <param name="token"></param>
         public Boolean AgregarElemento(string[] token, string lastWord)
         {
-
+            nodo.AddChild(elemento[elemento.Count - 1], token);
             elemento.RemoveAt(elemento.Count - 1);
             foreach (string palabra in token)
             {
@@ -42,7 +46,7 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
             {
                 hola += elemento[indexElemento];
             }
-            MessageBox.Show("Analisis: " + hola);
+            //MessageBox.Show("Analisis: " + hola);
             return false;   
         }
 
@@ -74,6 +78,17 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         {
             if (this.GetLastElement().Equals("$"))
             {
+                nodo.FoundTotalNodes();
+                nodo.AssignIds();
+                arbol.AddNode(nodo.GetGraphvizCode());
+                try
+                {
+                    arbol.CloseFile();
+                    arbol.CallGenerateFile("Hola");
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 return true;
             }
             else

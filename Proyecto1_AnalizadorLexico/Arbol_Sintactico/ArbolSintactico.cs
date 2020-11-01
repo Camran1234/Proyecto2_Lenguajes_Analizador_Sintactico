@@ -8,32 +8,41 @@ using System.Windows.Forms;
 
 namespace Proyecto1_AnalizadorLexico.Arbol_Sintactico
 {
-    class Arbol
+    class ArbolSintactico
     {
         private string path ;
         private string pathFile;
         private FileStream flujoArchivo;
         private byte[] contenido;
-        public Arbol()
+        private string nameFile = "Texto!@#$%^&.text";
+
+        public ArbolSintactico()
         {
             path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            MessageBox.Show(path);
             this.StartConnection();
         }
 
         //Empezamos la conexion con el archivo
         private void StartConnection()
         {
-            pathFile = path + "\\Texto.dot";
-            File.Delete(pathFile);
-            flujoArchivo = File.Create(pathFile);
-            contenido = new UTF8Encoding().GetBytes("digraph Archivo {");
-            flujoArchivo.Write(contenido, 0, contenido.Length);
+            try
+            {
+                pathFile = path + "\\"+nameFile;
+                File.Delete(pathFile);
+                flujoArchivo = File.Create(pathFile);
+                contenido = new UTF8Encoding().GetBytes("digraph Archivo {\n");
+                flujoArchivo.Write(contenido, 0, contenido.Length);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.StackTrace);
+            }
         }
 
-        public Boolean AddNode()
+        public Boolean AddNode(string nodo)
         {
-            //Agregar texto que soporte el agregar los nodos
+            contenido = new UTF8Encoding().GetBytes(nodo);
+            flujoArchivo.Write(contenido, 0, contenido.Length);
             return false;
         }
 
@@ -61,15 +70,20 @@ namespace Proyecto1_AnalizadorLexico.Arbol_Sintactico
         /// <param name="imgFileName"></param>
         private void GenerateImg(string imgFileName)
         {
-            string comandoGenerador = "dot.exe -Tpng " + pathFile + " -o " + imgFileName + " ";
-            var comando = string.Format(comandoGenerador);
-            var comandoIniciador = new System.Diagnostics.ProcessStartInfo("cmd", "/C" + comando);
-            var comandoProceso = new System.Diagnostics.Process();
-            comandoProceso.StartInfo = comandoIniciador;
-            comandoProceso.Start();
-            comandoProceso.WaitForExit();
-
-
+            try
+            {
+                string comandoGenerador = "dot.exe -Tpng " + nameFile + " -o " + imgFileName + " ";
+                var comando = string.Format(comandoGenerador);
+                var comandoIniciador = new System.Diagnostics.ProcessStartInfo("cmd", "/C" + comando);
+                var comandoProceso = new System.Diagnostics.Process();
+                comandoProceso.StartInfo = comandoIniciador;
+                comandoProceso.Start();
+                comandoProceso.WaitForExit();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
