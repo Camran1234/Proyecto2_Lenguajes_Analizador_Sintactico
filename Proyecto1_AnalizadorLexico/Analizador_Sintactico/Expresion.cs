@@ -1,0 +1,91 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
+{
+    class Expresion
+    {
+        private string name;
+        private List<string> apuntadores = new List<String>();
+        private List<string> expresionApuntada = new List<String>();
+
+        /// <summary>
+        /// Expresion de tabla de transicion
+        /// En este constructor se le agrega el nombre de esta expresion
+        /// </summary>
+        /// <param name="nombre"></param>
+        public Expresion(String nombre)
+        {
+            this.name = nombre;
+        }
+
+        /// <summary>
+        /// Agrega un apuntador a este metodo
+        /// </summary>
+        /// <param name="tokenApuntador"></param>
+        /// <param name="expresionApuntada"></param>
+        public void AddTokensApunta(string tokenApuntador, string expresionApuntada)
+        {
+            this.apuntadores.Add(tokenApuntador);
+            this.expresionApuntada.Add(expresionApuntada);
+        }
+
+        /// <summary>
+        /// Enviamos el nombre de la expresion para ver si concuerda, y el token es para ver si lo contiene
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public string[] ReturnExpresionApuntadora(string token)
+        {
+            string expresion;
+            string[] palabras;
+            for(int indexListas =0; indexListas< apuntadores.Count; indexListas++)
+            {
+                if (apuntadores[indexListas].Equals(token))
+                {
+                    //Recibimos la cadena
+                    expresion = expresionApuntada[indexListas];
+                    palabras = expresion.Split(' ');
+                    //Invertimos la cadena
+                    expresion = "";
+                    for (int indexArray = palabras.Length - 1; indexArray >= 0; indexArray--)
+                    {
+                        expresion += palabras[indexArray] + " ";
+                    }
+                    palabras = expresion.Split(' ');
+                    List<string> terminales = new List<string>(palabras);
+                    terminal:
+                    terminales.Remove("");
+                    if (terminales.Contains(""))
+                    {
+                        goto terminal;
+                    }
+                    return terminales.ToArray();
+                }
+            }
+            return null;
+        }
+    
+        /* De primero pedir el SameName para ver si la expresion es la misma
+         * Al corroborar que es la misma en un metodo externo pedimos que nos devuelva la expresion apuntadora
+         * con el metodo ReturnExpresionApuntador, solo enviamos el token y nos devolvera la expresion*/
+
+        public Boolean SameName(String nombre)
+        {
+            if (this.name.Equals(nombre))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+}

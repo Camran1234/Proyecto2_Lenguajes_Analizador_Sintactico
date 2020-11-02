@@ -1,0 +1,128 @@
+﻿using Proyecto1_AnalizadorLexico.Analizador_Sintactico;
+using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Proyecto1_AnalizadorLexico.Arbol_Sintactico
+{
+    class NodoHoja
+    {
+        private string value;
+        private Boolean haveChilds = false;
+        private int deepness=0;
+        private int id;
+        private List<NodoHoja> childs = new List<NodoHoja>();
+
+        //Para el nombre de los nodos se devolvera la profundidad, y el numero de hijos que es o tiene
+
+        public NodoHoja(string valor, int profundidad)
+        {
+            
+            this.value = valor;
+            this.deepness = profundidad;
+        }
+
+        /// <summary>
+        /// Cada vez que se lanze un metodo true lanzara como verdadero
+        /// </summary>
+        /// <param name="valueNewChild"></param>
+        /// <returns></returns>
+        public Boolean AddChild(string father,string[] valueNewChild)
+        {
+            if (this.value.Equals(father) && !haveChilds)
+            {
+                for(int indexValores=0; indexValores< valueNewChild.Length; indexValores++)
+                {
+                    childs.Add(new NodoHoja(valueNewChild[indexValores], this.deepness + 1));
+                }
+                haveChilds = true;
+                return true;
+            }
+            else
+            {
+                for (int indexHoja= 0; indexHoja < childs.Count;indexHoja++)
+                {
+                    if (childs[indexHoja].AddChild(father,valueNewChild) == true)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        /// <summary>
+        /// Revisa si tiene hijos
+        /// </summary>
+        /// <returns></returns>
+        public Boolean HaveChilds()
+        {
+            return this.haveChilds;
+        }
+
+        /// <summary>
+        /// Obtiene el codigo para graphviz
+        /// </summary>
+        /// <param name="sonNumber"></param>
+        /// <returns></returns>
+        public string GetGraphvizCode()
+        {
+            string info="";
+            string codigo = this.GetLabel() ;
+            for (int indexHijo = 0; indexHijo < childs.Count; indexHijo++)
+            {
+                codigo += childs[indexHijo].GetLabel();
+            }
+            codigo += this.GetId() + " -> { ";
+            for (int indexHijo=0; indexHijo<childs.Count;indexHijo++)
+            {
+                info += childs[indexHijo].GetId() + " ";
+            }
+            codigo += info + " } \n";
+            for (int indexHijo = 0; indexHijo < childs.Count; indexHijo++)
+            {
+                codigo += childs[indexHijo].GetGraphvizCode();
+            }
+            if (info.Equals(""))
+            {
+                return "";
+            }
+            //Agregar resto codigo
+            return codigo;
+        }
+
+       public void FoundTotalNodes()
+        {
+            new AsignadorId().NodeFound();
+            for(int indexHijo=0;indexHijo<childs.Count; indexHijo++)
+            {
+                childs[indexHijo].FoundTotalNodes();
+            }
+        }
+
+        public void AssignIds()
+        {
+            id = new AsignadorId().GetId();
+            for (int indexHijo = 0; indexHijo < childs.Count; indexHijo++)
+            {
+                childs[indexHijo].AssignIds();
+            }
+        }
+
+        public string GetId()
+        {
+            return (deepness + "" + id);
+        }
+
+        public string GetLabel()
+        {
+            return (deepness + "" + id + " [label=\"" + value + "\"] \n");
+        }
+    }
+}
