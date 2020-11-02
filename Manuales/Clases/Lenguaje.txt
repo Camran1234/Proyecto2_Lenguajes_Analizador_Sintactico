@@ -1,0 +1,368 @@
+namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
+{
+    class Lenguaje
+    {
+
+        //Usaremos el token formado con el conjunto de caracteres analizados
+        //Tambien analizaremos la posicion y poder pintar esa parte del texto en el richtTextBox del IDE
+        //la variable lengthOfToken se utilizara para usar el metodo de richTextBox Select que seleccionaremos esa parte
+        //luego con SelectColor cambiamos el color
+        private InfoGramatica[] gramaticas = new InfoGramatica[44];
+        private List<int> automatasParaAvanzar = new List<int>();
+        private int resultado;
+        private PintarElemento pintador;
+        private Boolean permisoAgregarCaracter = true;
+        private bool solucionEncontrada;
+        private List<Token> tokens = new List<Token>();
+        private string lexema = "";
+        private List<Error> tokenErroneos = new List<Error>();
+        private bool tokenVuelta;
+        private bool tokenAddedWhileModusOperandum = false;
+
+        /// <summary>
+        /// Establece un automata donde contenedremos todas las gramaticas clases que se establecieron
+        /// </summary>
+        public Lenguaje(RichTextBox richTextBox)
+        {
+            pintador = new PintarElemento(richTextBox);
+            //Establecemos una lista de las gramaticas que contiene el automata
+            gramaticas[0] = new And();
+            gramaticas[1] = new Boolean_();
+            gramaticas[2] = new Cadena();
+            gramaticas[3] = new Chart();
+            gramaticas[4] = new Colon();
+            gramaticas[5] = new ComentarioUnaLinea();
+            gramaticas[6] = new ComentarioVariasLineas();
+            gramaticas[7] = new Comparacion();
+            gramaticas[8] = new Decimal_();
+            gramaticas[9] = new Desde();
+            gramaticas[10] = new Diferente();
+            gramaticas[11] = new Disminuir();
+            gramaticas[12] = new Division();
+            gramaticas[13] = new Entero();
+            gramaticas[14] = new Hacer();
+            gramaticas[15] = new Hasta();
+            gramaticas[16] = new Igual();
+            gramaticas[17] = new Incrementar();
+            gramaticas[18] = new Incremento();
+            gramaticas[19] = new Mayor();
+            gramaticas[20] = new MayorIgual();
+            gramaticas[21] = new Menor();
+            gramaticas[22] = new MenorIgual();
+            gramaticas[23] = new Mientras();
+            gramaticas[24] = new Multiplicacion();
+            gramaticas[25] = new Negacion();
+            gramaticas[26] = new Or();
+            gramaticas[27] = new ParentesisAbrir();
+            gramaticas[28] = new ParentesisCerrar();
+            gramaticas[29] = new Resta();
+            gramaticas[30] = new Si();
+            gramaticas[31] = new Sino();
+            gramaticas[32] = new Sino_Si();
+            gramaticas[33] = new Suma();
+            gramaticas[34] = new Variable();
+            gramaticas[35] = new _String();
+            gramaticas[36] = new _Char();
+            gramaticas[37] = new True();
+            gramaticas[38] = new False();
+            gramaticas[39] = new LlaveAbierta();
+            gramaticas[40] = new LlaveCerrar();
+            gramaticas[41] = new Coma();
+            gramaticas[42] = new Imprimir();
+            gramaticas[43] = new Leer();
+        }
+
+        public Boolean ContainChar(char caracter, int index)
+        {//Al entrar el método tiene permiso para agregar el caracter una vez por lo menos
+            permisoAgregarCaracter = true;
+            solucionEncontrada = false;
+
+            if (this.automatasParaAvanzar.Count == 0)
+            {
+                if (caracter != ' ' && caracter != '\n' && caracter != '\t')
+                {
+                    for (int indexGramatica = 0; indexGramatica < this.gramaticas.Length; indexGramatica++)
+                    {
+                        resultado = gramaticas[indexGramatica].ProveTransition(caracter);
+                        if (resultado != 3)
+                        {
+                            solucionEncontrada = true;
+                            //Algun metodo que indique que no se entro a ninguno
+                            //Retornaremos true y agregaremos un token 
+                        }
+                        //El modus Operandum nos indica si es la primera vez que se analizan todos los estados o no
+                        this.Posibilities(caracter, indexGramatica, index, false);
+                    }
+                    if(automatasParaAvanzar.Count == 0)
+                    {
+                        lexema = "";
+                        tokenVuelta = false;
+                        tokenAddedWhileModusOperandum = false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            } else           
+            {
+                tryAgain2:
+                for (int indexGramatica = 0; indexGramatica < this.automatasParaAvanzar.Count; indexGramatica++)
+                {
+                    resultado = gramaticas[(int) automatasParaAvanzar[indexGramatica]].ProveTransition(caracter);
+                    if (resultado != 3 )
+                    {
+                        solucionEncontrada = true;
+                        //Algun metodo que indique que no se entro a ninguno
+                        //Retornaremos true y agregaremos un token 
+                    }
+                    this.Posibilities(caracter, (int)automatasParaAvanzar[indexGramatica], index, true);
+                    if (resultado == 0 && automatasParaAvanzar.Count > 0 && indexGramatica<automatasParaAvanzar.Count)
+                    {
+                        goto tryAgain2;
+                    }else if (resultado == 1)
+                    {
+                        goto tryAgain2;
+                    }
+                }
+                if (automatasParaAvanzar.Count == 0)
+                {
+                    lexema = "";
+                    tokenVuelta = false;
+                    tokenAddedWhileModusOperandum = false;
+                    return true;
+                }
+            }
+            
+            ////Si ya solo queda un estado por analizar
+            //if (this.automatasFinales.Count == 1)
+            //{
+            //    //Agregamos el token y pintamos el elemento
+            //    tokens.Add(new Token(gramaticas[automatasParaAvanzar[0]].GetName(),lexema));
+            //    pintador.pintarTexto(gramaticas[automatasParaAvanzar[0]].GetName(),lexema,index);
+            //    lexema = "";
+            //    automatasFinales.Clear();
+            //    automatasParaAvanzar.Clear();
+            //}
+            
+            if (solucionEncontrada == false)
+            {
+                //Agregamos el token desconocido
+                if(caracter !=' ' && caracter != '\n'  && caracter != '\t')
+                {
+                    this.tokens.Add(new Token("?Error", Convert.ToString(caracter)));
+                    lexema = "";
+                    return true;
+                }
+            }
+            return false;
+        }
+        private void Posibilities(char caracter, int indexGramatica, int index, bool modusOperandum)
+        {
+            switch (resultado)
+            {
+                case 0:
+                    //Marcar como error completo
+                    if(automatasParaAvanzar.Count == 1 && !tokenAddedWhileModusOperandum)
+                    {
+                        this.tokenErroneos.Add(new Error(lexema, gramaticas[indexGramatica].GetName(), index));
+                        pintador.pintarTexto("?Error", lexema, index);
+                        lexema = "";
+                    }
+                    automatasParaAvanzar.Remove(indexGramatica);
+                    break;
+                case 1://Agregamos automatas en estados finales y en quienes entraron (por si no existian)
+                    //Para agregar el caracter una sola vez
+                    if (permisoAgregarCaracter == true)
+                    {
+                        lexema += caracter;
+                        permisoAgregarCaracter = false;
+                    }
+                    if (tokenVuelta)
+                    {
+                        tokens.RemoveAt(tokens.Count - 1);
+                        tokenVuelta = true ;
+                    }
+                    if (modusOperandum && tokenAddedWhileModusOperandum)
+                    {
+                        tokens.RemoveAt(tokens.Count - 1);
+                    }else if(modusOperandum == false && !tokenAddedWhileModusOperandum)
+                    {
+                        tokenAddedWhileModusOperandum = true;
+                    }else if( modusOperandum && !tokenAddedWhileModusOperandum)
+                    {
+                        tokenAddedWhileModusOperandum = true;
+                    }
+                    //Agregar lo de quitar el token del anterior caso es decir remover en caso de que huebieran varios
+                    //Agregamos el token y pintamos el elemento
+                    tokens.Add(new Token(gramaticas[indexGramatica].GetName(), lexema));
+                    pintador.pintarTexto(gramaticas[indexGramatica].GetName(), lexema, index);
+                    automatasParaAvanzar.Remove(indexGramatica);
+                    break;
+                case 2:
+                    //Por si no contiene el automata
+                    if (automatasParaAvanzar.Contains(indexGramatica)==false)
+                    {
+                        automatasParaAvanzar.Add(indexGramatica);
+                    }
+                    if (permisoAgregarCaracter == true)
+                    {
+                        lexema += caracter;
+                        permisoAgregarCaracter = false;
+                    }
+                    break;
+            }
+        }
+        public InfoGramatica[] GetGramaticas()
+        {
+            return this.gramaticas;
+        }
+
+        /// <summary>
+        /// Obtiene todos los errores encontrados
+        /// </summary>
+        /// <returns></returns>
+        public string GetErroresAsString(RichTextBox richTextBox)
+        {
+            string erroresMensaje = "";
+            Error error;
+            for (int indexErrores = 0; indexErrores < tokenErroneos.Count; indexErrores++)
+            {
+                tokenErroneos.ToArray()[indexErrores].ChangeIndexToLine(richTextBox);
+                error = tokenErroneos.ToArray()[indexErrores];
+                erroresMensaje += error.Message();
+            }
+            return erroresMensaje;
+        }
+
+        /// <summary>
+        /// Devuelve la cantidad de errores encontrados
+        /// </summary>
+        /// <returns></returns>
+        public int GetNoMistakes()
+        {
+            return tokenErroneos.Count;
+        }
+
+        /// <summary>
+        /// Obtiene el nombre de los tokens encontrados en el codigo
+        /// </summary>
+        /// <returns></returns>
+        public string GetTokensAsString()
+        {
+            string tokensMensaje = "";
+            string tokenAux;
+            for (int indexTokens = 0; indexTokens < tokens.Count; indexTokens++)
+            {
+                tokenAux = tokens[indexTokens].Message();
+                tokensMensaje += tokenAux + "\n";
+            }
+            return tokensMensaje;
+        }
+
+        /// <summary>
+        /// Devuelve la cantidad de tokens encontrados
+        /// </summary>
+        /// <returns></returns>
+        public int GetNoTokens()
+        {
+            this.ConvertNewTokens();
+            this.CleanTokens();
+            return tokens.Count;
+        }
+
+        private void CleanTokens()
+        {
+            for (int indexToken = 0 ; indexToken < tokens.Count; indexToken++){
+                if (tokens[indexToken].ReturnLexema().Equals(""))
+                {
+                    tokens.RemoveAt(indexToken);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Convierte los tokens amparados en palabra, entero o decimal
+        /// </summary>
+        private void ConvertNewTokens()
+        {
+            string tokenName = "";
+            string tokenActualName = "";
+            int opcion =0;
+            List<Token> tokenAuxiliar = new List<Token>();
+            for(int indexTokens=0; indexTokens<tokens.Count; indexTokens++)
+            {
+                etiqueta:
+                tokenActualName = tokens[indexTokens].ReturnTokenName();
+                if (tokenActualName.Equals("?Error"))
+                {
+                    tokenName += tokens[indexTokens].ReturnLexema();
+                }
+                else
+                {
+                    if (tokenName.Equals(""))
+                    {
+                        tokenAuxiliar.Add(tokens[indexTokens]);
+                    }
+                    else
+                    {
+                        opcion = this.CheckType(tokenName);
+                        switch (opcion)
+                        {
+                            //Decimal
+                            case 1:
+                                tokenAuxiliar.Add(new Token("numeroDecimal",tokenName));
+                                break;
+                                //Entero
+                            case 2:
+                                tokenAuxiliar.Add(new Token("numeroEntero", tokenName));
+                                break;
+                                //Palabra
+                            case 3:
+                                tokenAuxiliar.Add(new Token("Palabra", tokenName));
+                                break;
+                        }
+                        //Reiniciamos
+                        tokenName = "";
+                        goto etiqueta;
+                    }
+                }
+                tokenActualName = "";
+            }
+            tokens = tokenAuxiliar;
+        }
+
+        /// <summary>
+        /// Retorna 1 si es un decimal
+        /// Retorna 2 si es una entero
+        /// Retorna 3 si es una palabra
+        /// </summary>
+        /// <param name="expresion"></param>
+        /// <returns></returns>
+        private int CheckType(string expresion)
+        {
+
+            try
+            {
+                if (expresion.Contains("."))
+                {
+                    float.Parse(expresion);
+                    return 1;
+                }
+                else
+                {
+                    int.Parse(expresion);
+                    return 2;
+                }
+            } catch (Exception e)
+            {
+                return 3;
+            }
+        }
+
+        public List<Token> ReturnTokens()
+        {
+            return tokens;
+        }
+    }
+}

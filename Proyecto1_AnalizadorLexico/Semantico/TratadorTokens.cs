@@ -68,7 +68,6 @@ namespace Proyecto1_AnalizadorLexico.Semantico
                                         if (tokens[indexImpresion].ReturnLexema().Equals(variables[indexVariables].ReturnToken().ReturnLexema()))
                                         {
                                             text += variables[indexVariables].GetValueVariable();
-                                            MessageBox.Show(""+variables.Count);
                                         }
                                     }
                                 }

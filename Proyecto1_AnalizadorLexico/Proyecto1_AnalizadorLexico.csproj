@@ -60,7 +60,6 @@
     <Compile Include="Analizador_Sintactico\Automata_Pila.cs" />
     <Compile Include="Analizador_Sintactico\Expresion.cs" />
     <Compile Include="Arbol_Sintactico\ArbolSintactico.cs" />
-    <Compile Include="Arbol_Sintactico\ContenedorCuadrosTextos.cs" />
     <Compile Include="Arbol_Sintactico\NodoHoja.cs" />
     <Compile Include="Archivo\Error.cs" />
     <Compile Include="Archivo\ManipuladorArchivo.cs" />

@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
 {
     /// <summary>
@@ -12,15 +5,35 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
     /// </summary>
     class Transicion
     {
-        char caracterApuntador=' ';
-        string nombreEstadoInicial="";
-        string nombreEstadoFinal="";
+        char caracterApuntador = ' ';
+        char nextPosibleCharacter = ' ' ;
+        private bool assignedPosibleCharacter= false;
+        string nombreEstadoInicial = "";
+        string nombreEstadoFinal = "";
 
-        public Transicion(char caracter,string EstadoInicial,string EstadoFinal)
+        public Transicion(char caracter, string EstadoInicial, string EstadoFinal)
         {
             this.caracterApuntador = caracter;
             nombreEstadoFinal = EstadoFinal;
             nombreEstadoInicial = EstadoInicial;
+        }
+
+        public void AssignNextCharacterToNotIgnore(char newChar)
+        {
+            nextPosibleCharacter = newChar;
+            assignedPosibleCharacter = true;
+        }
+
+        public bool IfHaveNextCharacter()
+        {
+            if(assignedPosibleCharacter)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public string GetStartState()
@@ -56,26 +69,27 @@ namespace Proyecto1_AnalizadorLexico.Informacion_Gramaticas
         /// <returns></returns>
         public bool ProveChar(char caracter)
         {
-            //Si hay minusculas o mayusculas o espacios libres o saltos de linea analizara esto
-                if(caracterApuntador=='$' || caracterApuntador == '#' )
+            //Si el caracter enviado es el mismo con el que apunta al siguiente caracter
+            if (this.caracterApuntador == caracter)
+            {
+                return true;
+            }
+            else if (caracterApuntador == '$')
+            {
+                if (caracter == this.nextPosibleCharacter)
                 {
-                    if (caracter >= 97 && caracter <= 122)
-                    {
-                        return true;
-                    }else if (caracter >= 65 && caracter <= 90)
-                    {
-                        return true;
-                    }
-                    
+                    return true;
                 }
                 else
                 {
-                //Si el caracter enviado es el mismo con el que apunta al siguiente caracter
-                    if (this.caracterApuntador == caracter)
-                    {
-                        return true;
-                    }
+                    //Aceptamos cualquier valor
+                    //Para aceptar ciclos
+                    return false;
                 }
+            }else if(caracterApuntador == '#')
+            {
+                return true;
+            }
             return false;
         }
 

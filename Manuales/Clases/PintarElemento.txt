@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
 {
     class PintarElemento
@@ -45,17 +37,20 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                     case "Chart":
                         color = Color.Brown;
                         break;
-                    case "Igual":
+                    case "=":
                         sizeToken = 1;
                         color = Color.Pink;
                         break;
-                    case "Colon":
+                    case ";":
                         sizeToken = 1;
                         color = Color.Pink;
+                        break;
+                    case "?Error":
+                        color = Color.LightGray;
                         break;
                     default:
-                        if (token.Equals("Si") || token.Equals("Sino") || token.Equals("Sino_Si") || token.Equals("Mientras") || token.Equals("Hacer")
-                             || token.Equals("Desde") || token.Equals("Hasta") || token.Equals("Incremento"))
+                        if (token.Equals("SI") || token.Equals("SINO") || token.Equals("SINO_SI") || token.Equals("Mientras") || token.Equals("Hacer")
+                             || token.Equals("Desde") || token.Equals("Hasta") || token.Equals("Incremento") || token.Equals("Variable"))
                         {
                             color = Color.Green;
                         }
@@ -64,14 +59,14 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Lexico
                             sizeToken = cadena.Length;
                             color = Color.Red;
                         }
-                        else if (token.Equals("Suma") || token.Equals("Resta") || token.Equals("Multiplicacion") || token.Equals("Division") || token.Equals("Mayor") || token.Equals("Menor")
-                           || token.Equals("ParentesisAbrir") || token.Equals("ParentesisCerrar"))
+                        else if (token.Equals("+") || token.Equals("-") || token.Equals("*") || token.Equals("/") || token.Equals(">") || token.Equals("<")
+                           || token.Equals("(") || token.Equals(")"))
                         {
                             sizeToken = 1;
                             color = Color.Blue;
                         }
-                        else if (token.Equals("Incrementar") || token.Equals("Disminuir") || token.Equals("MayorIgual") || token.Equals("MenorIgual")
-                           || token.Equals("Comparacion") || token.Equals("Diferente") || token.Equals("Or") || token.Equals("And") || token.Equals("Negacion"))
+                        else if (token.Equals("++") || token.Equals("--") || token.Equals(">=") || token.Equals("<=")
+                           || token.Equals("==") || token.Equals("!=") || token.Equals("||") || token.Equals("&&") || token.Equals("!"))
                         {
                             sizeToken = 2;
                             color = Color.Blue;
