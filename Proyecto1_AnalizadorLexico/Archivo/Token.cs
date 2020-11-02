@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto1_AnalizadorLexico.Archivo
 {
-    class Token
+    public class Token
     {
         private string token;
         private string lexema;
@@ -36,5 +36,14 @@ namespace Proyecto1_AnalizadorLexico.Archivo
             return lexema;
         }
 
+        internal bool WatchIfSame(Token token)
+        {
+            if (this == token)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

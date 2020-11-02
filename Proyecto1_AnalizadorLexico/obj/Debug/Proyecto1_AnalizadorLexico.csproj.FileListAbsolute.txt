@@ -28,3 +28,8 @@ C:\Users\Camran1234\Source\Repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proye
 C:\Users\Camran1234\Source\Repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\bin\Debug\Proyecto1_AnalizadorLexico.exe.config
 C:\Users\Camran1234\Source\Repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\bin\Debug\Proyecto1_AnalizadorLexico.exe
 C:\Users\Camran1234\Source\Repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\bin\Debug\Proyecto1_AnalizadorLexico.pdb
+C:\Users\Camran1234\source\repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\bin\Debug\AutocompleteMenu-ScintillaNET.dll
+C:\Users\Camran1234\source\repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\bin\Debug\ScintillaNET.dll
+C:\Users\Camran1234\source\repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\bin\Debug\ScintillaNET.xml
+C:\Users\Camran1234\source\repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.csproj.CopyComplete
+C:\Users\Camran1234\source\repos\Proyecto2_Lenguajes_Analizador_Sintactico\Proyecto1_AnalizadorLexico\obj\Debug\Proyecto1_AnalizadorLexico.Interfaces.FormAsignadorVariable.resources

@@ -219,7 +219,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
                             palabras = expresiones[acceso].ReturnExpresionApuntadora(token);
                             if (palabras == null)
                             {
-                                MessageBox.Show("elemento1: " + pila.GetLastElement() + " " + acceso + " " + token);
+                                FormEntorno.cuadroErrorA.AppendText("Error sintactico cerca de: " + this.LexicErrorMessage(indexToken, tokens) + "\n");
+                                MessageBox.Show("Error Sintactico, no se puede generar el árbol");
                                 return false;
                             }
                             pila.AgregarElemento(palabras, token);
@@ -227,7 +228,8 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
                         else
                         {
                             //Codigo Para indicar que ya no se pudo continuar el automata
-                            MessageBox.Show("elemento2: " + pila.GetLastElement() + " " + acceso + " " + token);
+                            FormEntorno.cuadroErrorA.AppendText("Error sintactico cerca de: " + this.LexicErrorMessage(indexToken, tokens) + "\n");
+                            MessageBox.Show("Error Sintactico, no se puede generar el árbol");
                             return false;
                         }
                         if (!pila.QuitarElemento(token))
@@ -244,8 +246,29 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
                 
                 return true;
             }
-            MessageBox.Show("elementoAiuda: " + pila.GetLastElement());
+            MessageBox.Show("ERROR: ");
+            FormEntorno.cuadroErrorA.AppendText("Error sintactico incapaz de detectar \n");
             return false;
+        }
+
+        private string LexicErrorMessage(int indexToken, List<Token> tokens)
+        {
+            string textoError = "";
+            if (indexToken > 0 && indexToken < tokens.Count - 1)
+            {
+                textoError += tokens[indexToken - 1].ReturnLexema() + tokens[indexToken].ReturnLexema()
+                    + tokens[indexToken + 1].ReturnLexema();
+            }
+            else if (indexToken >= 0 && indexToken < tokens.Count - 1)
+            {
+                textoError += tokens[indexToken].ReturnLexema()
+                    + tokens[indexToken + 1].ReturnLexema();
+            }
+            else
+            {
+                textoError += tokens[indexToken].ReturnLexema();
+            }
+            return textoError;
         }
 
         private int  AnalizeToken(string nombre)

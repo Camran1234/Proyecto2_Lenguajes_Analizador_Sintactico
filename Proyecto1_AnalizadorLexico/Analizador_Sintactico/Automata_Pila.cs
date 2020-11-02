@@ -22,8 +22,12 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         {
             elemento.Add("$");
             elemento.Add("E");
-            nodo = new NodoHoja("E", 0);
-            arbol = new ArbolSintactico();
+            if (FormEntorno.hacerArbol)
+            {
+                nodo = new NodoHoja("E", 0);
+                arbol = new ArbolSintactico();
+            }
+            
         }
         /// <summary>
         /// Agrega elementos a la pila
@@ -31,7 +35,10 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         /// <param name="token"></param>
         public Boolean AgregarElemento(string[] token, string lastWord)
         {
-            nodo.AddChild(elemento[elemento.Count - 1], token);
+            if (FormEntorno.hacerArbol)
+            {
+                nodo.AddChild(elemento[elemento.Count - 1], token);
+            }
             elemento.RemoveAt(elemento.Count - 1);
             foreach (string palabra in token)
             {
@@ -78,17 +85,23 @@ namespace Proyecto1_AnalizadorLexico.Analizador_Sintactico
         {
             if (this.GetLastElement().Equals("$"))
             {
-                nodo.FoundTotalNodes();
-                nodo.AssignIds();
-                arbol.AddNode(nodo.GetGraphvizCode());
+                if (FormEntorno.hacerArbol)
+                {
+                    nodo.FoundTotalNodes();
+                    nodo.AssignIds();
+                    arbol.AddNode(nodo.GetGraphvizCode());
+                }
                 try
                 {
-                    arbol.CloseFile();
-                    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "jpg files (*.jpg)|*.jpg";
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    if (FormEntorno.hacerArbol)
                     {
-                        arbol.CallGenerateFile(saveFileDialog.FileName);
+                        arbol.CloseFile();
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.Filter = "jpg files (*.jpg)|*.jpg";
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            arbol.CallGenerateFile(saveFileDialog.FileName);
+                        }
                     }
                 }catch(Exception ex)
                 {

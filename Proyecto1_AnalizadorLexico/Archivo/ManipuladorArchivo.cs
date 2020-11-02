@@ -78,5 +78,35 @@ namespace Proyecto1_AnalizadorLexico.Archivo
             }
             
         }
+
+        internal void NewFile(string textoErrores, string path)
+        {
+            try
+            {
+                byte[] contenido = new UTF8Encoding().GetBytes(textoErrores);
+                FileStream fileStream = File.Create(path);
+                fileStream.Write(contenido,0, contenido.Length);
+                fileStream.Close();
+                MessageBox.Show("Archivo creado en: "+path);
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Error creando archivo en: " + path+ " \n -Error: "+ex.Message);
+            }
+        }
+
+        public void AddTextToFile(string path, string texto)
+        {
+            try
+            {
+                byte[] contenido = new UTF8Encoding().GetBytes(texto);
+                FileStream fileStream = File.Create(path);
+                fileStream.Write(contenido, 0, contenido.Length);
+                fileStream.Close();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
     }
 }

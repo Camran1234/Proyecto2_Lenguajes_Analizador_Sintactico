@@ -2,6 +2,7 @@
 using Proyecto1_AnalizadorLexico.Analizador_Sintactico;
 using Proyecto1_AnalizadorLexico.Archivo;
 using Proyecto1_AnalizadorLexico.Interfaces;
+using Proyecto1_AnalizadorLexico.Semantico;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -19,13 +20,20 @@ namespace Proyecto1_AnalizadorLexico
     public partial class FormEntorno : Form
     {
         private string pathProyecto="";
+        public static RichTextBox cuadroErrorA;
+        public static RichTextBox cuadroTokensA;
+        public static Boolean hacerArbol;
         public FormEntorno()
         {
             InitializeComponent();
             panelAnalizador.Visible=false;
             panelCrearArchivo.Visible = false;
             panelCrearProyecto.Visible = false;
+            cuadroErrorA = this.richTextBoxCuadroError;
+            cuadroTokensA = this.richTextBoxTokens;
         }
+
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -33,6 +41,7 @@ namespace Proyecto1_AnalizadorLexico
             {
                 richTextBoxCuadroError.ResetText();
                 richTextBoxTokens.ResetText();
+                hacerArbol = false;
                 AnalizadorLexico analizador = new AnalizadorLexico(richTextBoxCuadroCompilacion);
                 Int64 size = richTextBoxCuadroCompilacion.Text.Length;
                 Boolean resultado;
@@ -57,6 +66,7 @@ namespace Proyecto1_AnalizadorLexico
                 {
                     MessageBox.Show("ANALIZADOR SINTACTICO NO CORRECTO");
                 }
+                
             }catch (Exception es)
             {
                 MessageBox.Show("Error: " + es.StackTrace + "\n Otro error: "+es.Message) ;
@@ -75,19 +85,19 @@ namespace Proyecto1_AnalizadorLexico
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            string path;
             //Obtenemos el texto del cuadro de errores
             string textoErrores = richTextBoxCuadroError.Text;
-            //Creamos un buscador de carpetas
-            FolderBrowserDialog carpeta = new FolderBrowserDialog();
-            //Obtenemos el resultado de la carpeta 
-            DialogResult resultado = carpeta.ShowDialog();
-            //Obtenemos la path de la carpeta
-            string path = carpeta.SelectedPath;
-
-            //Verificamos que el usuario le halla dado en ok y que la path no sea nula o tenga espacios en blanco
-            if(resultado == DialogResult.OK && !string.IsNullOrWhiteSpace(path))
+            //Creamos un guardador de archivos
+            SaveFileDialog carpeta = new SaveFileDialog();
+            carpeta.Filter = "txt files (*.txt)|*.txt";
+            //Verificamos que el usuario le halla dado en ok 
+            if (carpeta.ShowDialog() == DialogResult.OK)
             {
-                new ManipuladorArchivo().createFile(textoErrores, path,true);
+                //Colocamos la path
+                path = carpeta.FileName;
+                //Creamos el archivo
+                new ManipuladorArchivo().NewFile(textoErrores, path);
             }
             
             
@@ -371,6 +381,86 @@ namespace Proyecto1_AnalizadorLexico
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonArbol_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                richTextBoxCuadroError.ResetText();
+                richTextBoxTokens.ResetText();
+                hacerArbol = true;
+                AnalizadorLexico analizador = new AnalizadorLexico(richTextBoxCuadroCompilacion);
+                Int64 size = richTextBoxCuadroCompilacion.Text.Length;
+                Boolean resultado;
+                for (int indexCuadro = 0; indexCuadro < size; indexCuadro++)
+                {
+                    analizador.AnalizarLexema(richTextBoxCuadroCompilacion.Text[indexCuadro], indexCuadro);
+                    if (indexCuadro == size - 1)
+                    {
+                        analizador.AnalizarLexema(' ', indexCuadro);
+                    }
+                }
+                analizador.AddMistakesTokens(this.richTextBoxCuadroError, this.richTextBoxCuadroCompilacion);
+                analizador.AddTokens(this.richTextBoxTokens);
+                AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
+                resultado = analizadorSintactico.EmpezarAnalizador(analizador.ReturnTokens());
+                analizador = null;
+                if (resultado)
+                {
+                    MessageBox.Show("ANALIZADOR SINTACTICO CORRECTO, ARBOL CREADO");
+                }
+                else
+                {
+                    MessageBox.Show("ANALIZADOR SINTACTICO NO CORRECTO, INCAPAZ DE CREAR EL ARBOL");
+                }
+
+            }
+            catch (Exception es)
+            {
+                MessageBox.Show("Error: " + es.StackTrace + "\n Otro error: " + es.Message);
+            }
+        }
+
+        private void buttonSalida_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                richTextBoxCuadroError.ResetText();
+                richTextBoxTokens.ResetText();
+                hacerArbol = false;
+                AnalizadorLexico analizador = new AnalizadorLexico(richTextBoxCuadroCompilacion);
+                Int64 size = richTextBoxCuadroCompilacion.Text.Length;
+                Boolean resultado;
+                for (int indexCuadro = 0; indexCuadro < size; indexCuadro++)
+                {
+                    analizador.AnalizarLexema(richTextBoxCuadroCompilacion.Text[indexCuadro], indexCuadro);
+                    if (indexCuadro == size - 1)
+                    {
+                        analizador.AnalizarLexema(' ', indexCuadro);
+                    }
+                }
+                analizador.AddMistakesTokens(this.richTextBoxCuadroError, this.richTextBoxCuadroCompilacion);
+                analizador.AddTokens(this.richTextBoxTokens);
+                AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
+                resultado = analizadorSintactico.EmpezarAnalizador(analizador.ReturnTokens());
+                List<Token> resultadoTokens = analizador.ReturnTokens();
+                analizador = null;
+                if (resultado)
+                {
+                    new TratadorTokens(resultadoTokens);
+                    MessageBox.Show("ANALIZADOR SINTACTICO CORRECTO");
+                }
+                else
+                {
+                    MessageBox.Show("ANALIZADOR SINTACTICO NO CORRECTO");
+                }
+
+            }
+            catch (Exception es)
+            {
+                MessageBox.Show("Error: " + es.StackTrace + "\n Otro error: " + es.Message);
+            }
         }
     }
 }
